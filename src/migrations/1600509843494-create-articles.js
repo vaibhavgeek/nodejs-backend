@@ -4,22 +4,22 @@ module.exports.up = async function (next) {
   const client = await db.connect();
 
   await client.query(`
-  CREATE TABLE IF NOT EXISTS users (
+  CREATE TABLE IF NOT EXISTS articles (
     id uuid PRIMARY KEY,
-    email text UNIQUE,
-    password text
-  );
-
-  CREATE TABLE IF NOT EXISTS sessions (
-    id uuid PRIMARY KEY,
-    user_id uuid REFERENCES users (id) ON DELETE CASCADE
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    name text, 
+    user_id uuid, 
+    description json,
+    image text,
+    social_media json,
+    category text,
+    more_details json
   );
   `);
 
   await client.query(`
-  CREATE INDEX users_email on users (email);
-
-  CREATE INDEX sessions_user on sessions (user_id);
+  CREATE INDEX articles_id on articles (id);
   `);
 
   await client.release(true);
@@ -30,8 +30,7 @@ module.exports.down = async function (next) {
   const client = await db.connect();
 
   await client.query(`
-  DROP TABLE sessions;
-  DROP TABLE users;
+  DROP TABLE articles;
   `);
 
   await client.release(true);
