@@ -8,7 +8,7 @@ const sessionMiddleware = require('../middleware/session-middleware');
 
 const router = new Router();
 
-router.post('/', async (request, response) => {
+router.post('/login', async (request, response) => {
   try {
     const {email, password} = request.body;
     // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
@@ -28,11 +28,11 @@ router.post('/', async (request, response) => {
   }
 });
 
-router.get('/', sessionMiddleware, (request, response) => {
+router.get('/logged_in', sessionMiddleware, (request, response) => {
   response.json({userId: request.userId});
 });
 
-router.delete('/', async (request, response) => {
+router.delete('/logout', async (request, response) => {
   try {
     if (request.session.id) {
       await Session.delete(request.session.id);
