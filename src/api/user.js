@@ -4,9 +4,9 @@ const sessionMiddleware = require('../middleware/session-middleware');
 
 const router = new Router();
 
-router.post('/signup', async (request, response) => {
+router.post('/create', async (request, response) => {
   try {
-    const {email, password, mobile, city, location, dob, height, weight, bike, purpose} = request.body;
+    const {email, password, mobile, city, location, dob, height, weight, bike, purpose, image} = request.body;
     if (!email || !password) {
       return response
         .status(400)
@@ -24,7 +24,7 @@ router.post('/signup', async (request, response) => {
   }
 });
 
-router.post('/signup', async (request, response) => {
+router.post('/update', async (request, response) => {
   try {
     const {email, password, mobile, city, location, dob, height, weight, bike, purpose} = request.body;
     if (!email || !password) {

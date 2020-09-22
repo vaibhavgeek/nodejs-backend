@@ -8,13 +8,13 @@ const sessionMiddleware = require('../middleware/session-middleware');
 
 const router = new Router();
 
-router.post('/login', async (request, response) => {
+router.post('/create', async (request, response) => {
   try {
     const {email, password} = request.body;
     // eslint-disable-next-line unicorn/no-fn-reference-in-iterator
     const user = await User.find(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return response.status(403).json({});
+      return response.status(403).json();
     }
 
     const sessionId = await Session.create(user.id);
@@ -28,11 +28,12 @@ router.post('/login', async (request, response) => {
   }
 });
 
-router.get('/logged_in', sessionMiddleware, (request, response) => {
+router.get('/', sessionMiddleware, (request, response) => {
+  console.log(request);
   response.json({userId: request.userId});
 });
 
-router.delete('/logout', async (request, response) => {
+router.delete('/delete', async (request, response) => {
   try {
     if (request.session.id) {
       await Session.delete(request.session.id);

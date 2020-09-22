@@ -6,11 +6,14 @@ const shortid = require('shortid');
 const gravatarUrl = require('gravatar-url');
 
 module.exports = {
-  async createUserOrFind(email, password, mobile, city, location, dob, height, weight, bike, purpose, gender) {
+  async createUserOrFind(email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const referral = shortid.generate();
-      const image = gravatarUrl(email, {size: 200});
+      
+      if(!image)
+         image = gravatarUrl(email, {size: 200});
+
       const {rows} = await db.query(sql`
       INSERT INTO users (id, email, password, mobile, city, location, dob, height, weight, bike, purpose, referral, gender, image)
         VALUES (${uuidv4()}, ${email}, ${hashedPassword} , ${mobile}, ${city} , ${location} , ${dob}, ${height} , ${weight}, ${bike}, ${purpose}, ${referral}, ${gender}, ${image})
