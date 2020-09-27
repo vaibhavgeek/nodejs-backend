@@ -35,12 +35,27 @@ module.exports = {
       } 
     }
   },
-  async updateUser(email, mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
+  async updateUser(email, name , mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
     try {
-      const hashedPassword = await bcrypt.hash(password, 10);
+      if(!image)
+         image = gravatarUrl(email, {size: 200});
+
       const {rows} = await db.query(sql`
-      UPDATE users SET mobile = ${mobile}, city = ${city}, location = ${location}, dob = ${dob}, height = ${height}, weight = ${weight}, bike = ${bike}, purpose = ${purpose},  referral= ${referral}, gender = ${gender}, image = ${image}
-        WHERE email = ${email};
+      UPDATE users 
+      SET 
+        name = ${name},
+        mobile =  ${mobile} ,
+        city =   ${city} , 
+        location =  ${location} , 
+        dob =   ${dob} , 
+        height =   ${height} , 
+        weight =  ${weight} , 
+        bike =  ${bike}, 
+        purpose =   ${purpose} ,  
+        gender =   ${gender} , 
+        image =   ${image} 
+      WHERE email = ${email}
+      RETURNING id, name, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image;
       `);
 
       const [user] = rows;
@@ -59,7 +74,15 @@ module.exports = {
     SELECT * FROM users WHERE email=${email} LIMIT 1;
     `);
     return rows[0];
+  },
+
+  async findById(id) {
+    const {rows} = await db.query(sql`
+    SELECT * FROM users WHERE id=${id} LIMIT 1;
+    `);
+    return rows[0];
   }
+
 
 
 };
