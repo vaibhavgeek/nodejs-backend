@@ -28,9 +28,9 @@ router.post('/create', async (request, response) => {
   }
 });
 
-router.get('/', sessionMiddleware, (request, response) => {
-  console.log(request);
-  response.json({userId: request.userId});
+router.get('/', sessionMiddleware, async(request, response) => {
+  const user = await User.findById(request.userId);
+  response.json(user);
 });
 
 router.delete('/delete', async (request, response) => {
