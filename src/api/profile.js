@@ -4,9 +4,11 @@ const sessionMiddleware = require('../middleware/session-middleware');
 
 const router = new Router();
 
-router.get('/:user_id/:month', sessionMiddleware, async (request, response) => {
+router.get('/:user_id/rides/:month', async (request, response) => {
     try {
-      const {email , month} = request.body;
+      const {email} = request.body;
+      const {user_id , month} = request.params;
+     
       if (!email) {
         return response
           .status(400)
@@ -14,7 +16,7 @@ router.get('/:user_id/:month', sessionMiddleware, async (request, response) => {
       }
 
       const rides = await Profile.getUserRidesMonth(email, month);
-      return response.json(rides);
+      return response.status(200).json(rides);
 
     } catch (error) {
       console.error(
@@ -25,8 +27,7 @@ router.get('/:user_id/:month', sessionMiddleware, async (request, response) => {
 });
 
 
-router.get('/:user_id/lifetime',sessionMiddleware, async (request, response) => {
-
+router.get('/:user_id/rides/lifetime', async (request, response) => {
   try {
     const {email} = request.body;
     if (!email) {
@@ -36,8 +37,8 @@ router.get('/:user_id/lifetime',sessionMiddleware, async (request, response) => 
     }
 
     const rides = await Profile.getUserRidesLife(email);
-    console.log(rides);
-    response.status(200).json(rides);
+    /*console.log(rides);*/
+    return response.status(200).json(rides);
 
   } catch (error) {
     console.error(
@@ -49,19 +50,19 @@ router.get('/:user_id/lifetime',sessionMiddleware, async (request, response) => 
 });
 
 
-router.get('/:user_id/rides', sessionMiddleware, async (request, response) => {
+router.get('/:user_id/rides', async (request, response) => {
     response.json({"id": request.params.id});
 });
 
-router.get('/:user_id/rides/:id', sessionMiddleware, async (request, response) => {
+router.get('/:user_id/rides/:id', async (request, response) => {
     response.json({"id": request.params.id});
 });
 
-router.get('/:user_id/rides/:id/redeem',sessionMiddleware, async (request, response) => {
+router.get('/:user_id/rides/:id/redeem', async (request, response) => {
     response.json({"id": request.params.id});
 });
 
-router.post('/:user_id/rides/:ride_id', sessionMiddleware, async (request, response) => {
+router.post('/:user_id/rides/:ride_id', async (request, response) => {
   try {
     const {user_id, ride_id} = request.params;
     if (!ride_id) {
@@ -71,18 +72,18 @@ router.post('/:user_id/rides/:ride_id', sessionMiddleware, async (request, respo
     }
 
     const rides = await Profile.updateUserRide(ride_id);
-    return response.json(rides);
+    return response.status(200).json(rides);
 
   } catch (error) {
     console.error(
-      `Update Ride({ email: ${request.body.email} }) >> Error: ${error.stack}`
+       `UpdateRide({ params: ${request.params} }) >> Error: ${error.stack}`
     );
     response.status(500).json();
   } 
 
 });
 
-router.post('/:user_id/rides/create' , sessionMiddleware , async (request, response) => {
+router.post('/:user_id/rides/create' , async (request, response) => {
    // console.log(request.body);
     try {
         const {user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps} = request.body;
@@ -105,7 +106,7 @@ router.post('/:user_id/rides/create' , sessionMiddleware , async (request, respo
 });
 
 
-router.post('/:user_id/rides/create-many' , sessionMiddleware , async (request , response) => {
+router.post('/:user_id/rides/create-many' , async (request , response) => {
     try {
         request.body.forEach(async function(ride) {
             const {user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps} = ride;
