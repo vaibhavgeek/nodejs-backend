@@ -27,9 +27,9 @@ router.post('/create', async (request, response) => {
   }
 });
 
-router.get('/findbyemail', async (request, response) => {
+router.get('/findbyemail/:email', async (request, response) => {
   try {
-    const {email} = request.body;
+    const {email} = request.params;
     if (!email) {
       return response
         .status(400)
