@@ -45,7 +45,7 @@ router.get('/findbyemail', async (request, response) => {
   }
 });
 
-router.post('/update', sessionMiddleware,  async (request, response) => {
+router.post('/update',  async (request, response) => {
   try {
     const {email, name, mobile, city, location, dob, height, weight, bike, purpose, gender, image} = request.body;
     const user = await User.updateUser(email, name, mobile, city, location, dob, height, weight, bike, purpose, gender, image);
