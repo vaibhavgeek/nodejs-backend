@@ -12,7 +12,7 @@ router.get('/:user_id/rides/:month', async (request, response) => {
 
     } catch (error) {
       console.error(
-        `getUserRidesMonth({ email: ${request.body.email} }) >> Error: ${error.stack}`
+        `getUserRidesMonth({ email: ${request.params.user_id} }) >> Error: ${error.stack}`
       );
       response.status(500).json();
     } 
@@ -27,7 +27,7 @@ router.get('/:user_id/rides/lifetime', async (request, response) => {
 
   } catch (error) {
     console.error(
-      `getUserRidesLifetime({ email: ${request.body.email} }) >> Error: ${error.stack}`
+      `getUserRidesLifetime({ email: ${request.params.user_id} }) >> Error: ${error.stack}`
     );
     response.status(500).json();
   } 
