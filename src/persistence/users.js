@@ -13,15 +13,17 @@ module.exports = {
       
       if(!image)
          image = gravatarUrl(email, {size: 200});
-
+      
+      
       const {rows} = await db.query(sql`
-      INSERT INTO users (id, email, password, mobile, city, location, dob, height, weight, bike, purpose, referral, gender, image)
+        INSERT INTO users (id, email, password, mobile, city, location, dob, height, weight, bike, purpose, referral, gender, image)
         VALUES (${uuidv4()}, ${email}, ${hashedPassword} , ${mobile}, ${city} , ${location} , ${dob}, ${height} , ${weight}, ${bike}, ${purpose}, ${referral}, ${gender}, ${image})
         RETURNING id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image;
       `);
 
       const [user] = rows;
       return {"user": user, "new": true};
+      
     } catch (error) {
       if (error.constraint === 'users_email_key') {
          const {rows} = await db.query(sql`

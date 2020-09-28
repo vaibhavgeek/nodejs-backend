@@ -8,10 +8,10 @@ module.exports = {
     try {
 
       const {rows} = db.query(sql`
-        SELECT id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
+        SELECT rides.id as ride_id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id, 
-        distance, destination_gps FROM users , rides WHERE rides.user_id = user.id AND email= ${email} 
-        AND EXTRACT(MONTH FROM rides.comleted_at) = ${month};`)
+        distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND email= ${email} 
+        AND EXTRACT(MONTH FROM rides.completed_at) = ${month};`)
       return rows;
 
     } catch(error){
@@ -22,11 +22,12 @@ module.exports = {
    async getUserRidesLife(email){
     try {
 
-      const {rows} = db.query(sql`
-        SELECT id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
+      const {rows} = await db.query(sql`
+        SELECT rides.id as ride_id, users.email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id, 
-        distance, destination_gps FROM users , rides WHERE rides.user_id = user.id AND email= ${email} ;`)
-      return rows;
+        distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.email= ${email}`)
+      console.log(rows);
+        return rows;
 
     } catch(error){
       throw error;
@@ -63,24 +64,25 @@ module.exports = {
     }
   },
 
-  async updateUserRide(user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps ){
+  async updateUserRide(ride_id, user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps ){
      try {
       const {rows} =  db.query(sql`
       UPDATE rides 
       SET
-      started_at = IsNull(@started_at, ${started_at}),  
-        completed_at = IsNull(@completed_at, ${completed_at}), 
-        destination = IsNull(@destination,  ${destination}), 
-        elevation = IsNull(@elevation, ${elevation}), 
-        calories_spent = IsNull(@calories_spent,${calories_spent}), 
-        redeemed = IsNull(@redeemed, ${redeemed}), 
-        coins= IsNull(@coins, ${coins}), 
-        carbon = IsNull(@carbon, ${carbon}), 
-        route = IsNull(@route, ${route}), 
-        distance = IsNull(@distance, ${distance}), 
-        destination_gps = IsNull(@destination_gps, ${destination_gps})
+      started_at = ${started_at},
+        user_id = ${user_id},  
+        completed_at = ${completed_at}, 
+        destination =   ${destination}, 
+        elevation =  ${elevation}, 
+        calories_spent = ${calories_spent}, 
+        redeemed =  ${redeemed}, 
+        coins=  ${coins}, 
+        carbon =  ${carbon}, 
+        route = ${route}, 
+        distance = ${distance}, 
+        destination_gps =  ${destination_gps})
       WHERE 
-       user_id = ${user_id}
+       ride_id = ${ride_id}
         RETURNING id, user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps;
       `);
 
