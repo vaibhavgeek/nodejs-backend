@@ -21,7 +21,8 @@ router.get('/:user_id/rides/:month', async (request, response) => {
 
 router.get('/:user_id/rides/lifetime', async (request, response) => {
   try {
-    const rides = await Profile.getUserRidesLife(email);
+    const {user_id} = request.params;
+    const rides = await Profile.getUserRidesLife(user_id);
     return response.status(200).json(rides);
 
   } catch (error) {
@@ -33,18 +34,6 @@ router.get('/:user_id/rides/lifetime', async (request, response) => {
 
 });
 
-
-router.get('/:user_id/rides', async (request, response) => {
-    response.json({"id": request.params.id});
-});
-
-router.get('/:user_id/rides/:id', async (request, response) => {
-    response.json({"id": request.params.id});
-});
-
-router.get('/:user_id/rides/:id/redeem', async (request, response) => {
-    response.json({"id": request.params.id});
-});
 
 router.post('/:user_id/rides/:ride_id', async (request, response) => {
   try {
