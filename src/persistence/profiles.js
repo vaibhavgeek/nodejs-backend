@@ -4,13 +4,12 @@ const bcrypt = require('bcrypt');
 const db = require('./db');
 
 module.exports = {
-  async getUserRidesMonth(email,month){
+  async getUserRidesMonth(userId,month){
     try {
-      console.log(email);
       const {rows} = await db.query(sql`
         SELECT rides.id as ride_id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id, 
-        distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND email= ${email} 
+        distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.id= ${userId} 
         AND EXTRACT(MONTH FROM rides.completed_at) = ${month};`);
       return rows;
       console.log(rows);
@@ -20,13 +19,13 @@ module.exports = {
     }
   },
 
-   async getUserRidesLife(email){
+   async getUserRidesLife(userId){
     try {
 
       const {rows} = await db.query(sql`
         SELECT rides.id as ride_id, users.email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id, 
-        distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.email= ${email}`)
+        distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.id= ${userId}`)
       //console.log(rows);
         return rows;
 
@@ -35,13 +34,13 @@ module.exports = {
     }
   }, 
 
-  async getUserRide(email, rideId){
+  async getUserRide(userId, rideId){
     try {
 
       const {rows} = await db.query(sql`
         SELECT id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as rideId, 
-        distance, destination_gps FROM users , rides WHERE rides.user_id = user.id AND email= ${email} 
+        distance, destination_gps FROM users , rides WHERE rides.user_id = user.id AND users.id= ${userId} 
         AND rides.id = ${rideId};`)
       return rows;
 
