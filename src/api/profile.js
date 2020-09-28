@@ -6,15 +6,7 @@ const router = new Router();
 
 router.get('/:user_id/rides/:month', async (request, response) => {
     try {
-      const {email} = request.body;
       const {user_id , month} = request.params;
-     
-      if (!email) {
-        return response
-          .status(400)
-          .json({message: 'email must be provided for new ride'});
-      }
-
       const rides = await Profile.getUserRidesMonth(email, month);
       return response.status(200).json(rides);
 
@@ -29,15 +21,7 @@ router.get('/:user_id/rides/:month', async (request, response) => {
 
 router.get('/:user_id/rides/lifetime', async (request, response) => {
   try {
-    const {email} = request.body;
-    if (!email) {
-      return response
-        .status(400)
-        .json({message: 'email must be provided for new ride'});
-    }
-
     const rides = await Profile.getUserRidesLife(email);
-    /*console.log(rides);*/
     return response.status(200).json(rides);
 
   } catch (error) {
