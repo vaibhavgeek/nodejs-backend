@@ -6,13 +6,14 @@ const db = require('./db');
 module.exports = {
   async getUserRidesMonth(email,month){
     try {
-
-      const {rows} = db.query(sql`
+      console.log(email);
+      const {rows} = await db.query(sql`
         SELECT rides.id as ride_id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id, 
         distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND email= ${email} 
-        AND EXTRACT(MONTH FROM rides.completed_at) = ${month};`)
+        AND EXTRACT(MONTH FROM rides.completed_at) = ${month};`);
       return rows;
+      console.log(rows);
 
     } catch(error){
       throw error;
@@ -26,7 +27,7 @@ module.exports = {
         SELECT rides.id as ride_id, users.email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id, 
         distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.email= ${email}`)
-      console.log(rows);
+      //console.log(rows);
         return rows;
 
     } catch(error){
@@ -37,7 +38,7 @@ module.exports = {
   async getUserRide(email, rideId){
     try {
 
-      const {rows} = db.query(sql`
+      const {rows} = await db.query(sql`
         SELECT id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
         , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as rideId, 
         distance, destination_gps FROM users , rides WHERE rides.user_id = user.id AND email= ${email} 
@@ -51,7 +52,7 @@ module.exports = {
 
   async createUserRide(user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps ){
      try {
-      const {rows} =  db.query(sql`
+      const {rows} = await db.query(sql`
       INSERT INTO rides (id, user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps)
         VALUES (${uuidv4()}, ${user_id}, ${started_at} , ${completed_at}, ${destination} , ${elevation} , ${calories_spent}, ${redeemed} , ${coins}, ${carbon}, ${route}, ${distance}, ${destination_gps})
         RETURNING id, user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps;
@@ -66,10 +67,10 @@ module.exports = {
 
   async updateUserRide(ride_id, user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps ){
      try {
-      const {rows} =  db.query(sql`
+      const {rows} = await db.query(sql`
       UPDATE rides 
       SET
-      started_at = ${started_at},
+        started_at = ${started_at},
         user_id = ${user_id},  
         completed_at = ${completed_at}, 
         destination =   ${destination}, 
@@ -80,12 +81,11 @@ module.exports = {
         carbon =  ${carbon}, 
         route = ${route}, 
         distance = ${distance}, 
-        destination_gps =  ${destination_gps})
+        destination_gps =  ${destination_gps}
       WHERE 
-       ride_id = ${ride_id}
+        id = ${ride_id}
         RETURNING id, user_id, started_at, completed_at, destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, destination_gps;
       `);
-
       return rows;
     } catch (error) {
 
