@@ -15,10 +15,10 @@ module.exports.up = async function (next) {
     elevation text, 
     calories_spent text, 
     redeemed boolean, 
-    coins integer,
-    carbon integer,
+    coins text,
+    carbon text,
     route json,
-    distance integer,
+    distance text,
     destination_gps json
   );
   `);
