@@ -4,13 +4,35 @@ const bcrypt = require('bcrypt');
 const db = require('./db');
 const shortid = require('shortid');
 const gravatarUrl = require('gravatar-url');
+const request = require('request-promise')
+const AWS = require('aws-sdk')
+
+
+const s3 = new AWS.S3();
+
+
 
 module.exports = {
   async createUserOrFind(email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const referral = shortid.generate();
-      
+      if(image.includes("fbsbx.com"))
+      {
+        const options = {
+          uri: image,
+          encoding: null
+        };
+        const body = await request(options)
+        const uploadResult = await s3.upload({
+              Bucket: 'profilepics',
+              Key   : "/",
+              Body  : body,   
+        }).promise();
+
+        console.log(uploadResult);
+      }
+
       if(!image)
          image = gravatarUrl(email, {size: 200});
       
