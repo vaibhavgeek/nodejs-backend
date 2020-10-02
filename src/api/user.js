@@ -47,8 +47,8 @@ router.get('/findbyemail/:email', async (request, response) => {
 
 router.post('/update',  async (request, response) => {
   try {
-    const {email, name, mobile, city, location, dob, height, weight, bike, purpose, gender, image} = request.body;
-    const user = await User.updateUser(email, name, mobile, city, location, dob, height, weight, bike, purpose, gender, image);
+    const {email, name, mobile, city, location, dob, height, weight, bike, purpose, gender, brand, image} = request.body;
+    const user = await User.updateUser(email, name, mobile, city, location, dob, height, weight, bike, purpose, gender, brand, image);
     return response.status(200).json(user);
     
   } catch (error) {

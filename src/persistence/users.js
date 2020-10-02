@@ -63,7 +63,7 @@ module.exports = {
       } 
     }
   },
-  async updateUser(email, name , mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
+  async updateUser(email, name , mobile, city, location, dob, height, weight, bike, purpose, gender, brand, image) {
     try {
       if(image === null)
          image = gravatarUrl(email, {size: 200});
@@ -94,9 +94,10 @@ module.exports = {
         bike =  ${bike}, 
         purpose =   ${purpose} ,  
         gender =   ${gender} , 
-        image =   ${image} 
+        image =   ${image} ,
+        brand = ${brand}
       WHERE email = ${email}
-      RETURNING id, name, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image;
+      RETURNING id, name, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,brand,image;
       `);
 
       const [user] = rows;
