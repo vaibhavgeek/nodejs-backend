@@ -65,7 +65,7 @@ module.exports = {
   },
   async updateUser(email, name , mobile, city, location, dob, height, weight, bike, purpose, gender, brand, image) {
     try {
-      if(image === null)
+      if(image == null)
          image = gravatarUrl(email, {size: 200});
       if(image.includes("fbsbx.com"))
       {
