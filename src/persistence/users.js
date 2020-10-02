@@ -8,8 +8,11 @@ const request = require('request-promise')
 const AWS = require('aws-sdk')
 
 
-const s3 = new AWS.S3();
-
+const s3 = new AWS.S3({
+  accessKeyId: "AKIAYBCS6IU6Q4OEC67F",
+  secretAccessKey: "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",
+  Bucket: "profilepic-cc"
+});
 
 
 module.exports = {
@@ -17,25 +20,26 @@ module.exports = {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const referral = shortid.generate();
+      
+      if(image === null)
+         image = gravatarUrl(email, {size: 200});
+      
       if(image.includes("fbsbx.com"))
       {
-        const options = {
+          const options = {
           uri: image,
           encoding: null
         };
         const body = await request(options)
         const uploadResult = await s3.upload({
-              Bucket: 'profilepics',
-              Key   : "/",
+              Bucket: 'profilepic-cc',
+              Key   : shortid.generate() + ".jpeg",
               Body  : body,   
         }).promise();
-
-        console.log(uploadResult);
+        console.log(uploadResult.Location);
+        image = uploadResult.Location;
+        console.log("image", image);
       }
-
-      if(!image)
-         image = gravatarUrl(email, {size: 200});
-      
       
       const {rows} = await db.query(sql`
         INSERT INTO users (id, email, password, mobile, city, location, dob, height, weight, bike, purpose, referral, gender, image)
@@ -61,9 +65,22 @@ module.exports = {
   },
   async updateUser(email, name , mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
     try {
-      if(!image)
+      if(image === null)
          image = gravatarUrl(email, {size: 200});
-
+      if(image.includes("fbsbx.com"))
+      {
+             const options = {
+             uri: image,
+             encoding: null
+           };
+           const body = await request(options)
+           const uploadResult = await s3.upload({
+                 Bucket: 'profilepic-cc',
+                 Key   : shortid.generate() + ".jpeg",
+                 Body  : body,   
+           }).promise();
+           image = uploadResult.Location;
+      }
       const {rows} = await db.query(sql`
       UPDATE users 
       SET 
