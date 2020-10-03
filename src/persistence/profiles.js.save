@@ -8,9 +8,9 @@ module.exports = {
     try {
       const {rows} = await db.query(sql`
         SELECT rides.id as ride_id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
-        , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id,rides.started_at, rides.completed_at 
-        , distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.id= ${userId} 
-        AND EXTRACT(MONTH FROM to_timestamp(rides.completed_at)) = ${month};`);
+        , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id,rides.started_at, rides. 
+        distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.id= ${userId} 
+        AND EXTRACT(MONTH FROM rides.completed_at) = ${month};`);
       return rows;
       console.log(rows);
 
@@ -24,7 +24,7 @@ module.exports = {
 
       const {rows} = await db.query(sql`
         SELECT rides.id as ride_id, users.email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image 
-        , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id,rides.started_at, rides.completed_at,  
+        , destination, elevation, calories_spent, redeemed, coins, carbon, route, distance, rides.id as ride_id, 
         distance, destination_gps FROM users , rides WHERE rides.user_id = users.id AND users.id= ${userId}`)
       //console.log(rows);
         return rows;
