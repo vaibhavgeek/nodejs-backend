@@ -7,14 +7,14 @@ const router = new Router();
 
 router.post('/create', async (request, response) => {
   try {
-    const {email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image} = request.body;
+    const {email, name, brand, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image} = request.body;
     if (!email || !password) {
       return response
         .status(400)
         .json({message: 'email and password must be provided'});
     }
 
-    const user = await User.createUserOrFind(email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image);
+    const user = await User.createUserOrFind(name, brand,email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image);
     const sessionId = await Session.create(user.id);
     request.session.id = sessionId;
     return response.status(200).json(user);
