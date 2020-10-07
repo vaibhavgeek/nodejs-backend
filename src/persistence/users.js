@@ -16,15 +16,15 @@ const s3 = new AWS.S3({
 
 
 module.exports = {
-  async createUserOrFind(email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
+  async createUserOrFind(name, brand, email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const referral = shortid.generate();
       
-      if(image === null)
+      if(image === undefined)
          image = gravatarUrl(email, {size: 200});
       
-      if(image.includes("fbsbx.com"))
+      if(image && image.includes("fbsbx.com"))
       {
           const options = {
           uri: image,
@@ -42,9 +42,9 @@ module.exports = {
       }
       
       const {rows} = await db.query(sql`
-        INSERT INTO users (id, email, password, mobile, city, location, dob, height, weight, bike, purpose, referral, gender, image)
-        VALUES (${uuidv4()}, ${email}, ${hashedPassword} , ${mobile}, ${city} , ${location} , ${dob}, ${height} , ${weight}, ${bike}, ${purpose}, ${referral}, ${gender}, ${image})
-        RETURNING id, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image;
+        INSERT INTO users (id, name, brand , email, password, mobile, city, location, dob, height, weight, bike, purpose, referral, gender, image)
+        VALUES (${uuidv4()}, ${name}, ${brand}, ${email}, ${hashedPassword} , ${mobile}, ${city} , ${location} , ${dob}, ${height} , ${weight}, ${bike}, ${purpose}, ${referral}, ${gender}, ${image})
+        RETURNING id,name, brand, email, mobile, city, location, dob, height, weight, bike, purpose,referral,gender,image;
       `);
 
       const [user] = rows;
