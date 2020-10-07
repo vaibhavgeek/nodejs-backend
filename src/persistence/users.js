@@ -16,6 +16,7 @@ const s3 = new AWS.S3({
 
 
 module.exports = {
+
   async createUserOrFind(name, brand, email, password, mobile, city, location, dob, height, weight, bike, purpose, gender, image) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
