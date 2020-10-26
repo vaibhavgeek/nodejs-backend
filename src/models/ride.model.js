@@ -33,7 +33,7 @@ const rideSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    destination_gps: {
+    destinationGPS: {
       type: String,
       trim: true,
     },
@@ -53,27 +53,27 @@ const rideSchema = mongoose.Schema(
       type: Boolean,
       trim: true,
     },
-    flagged_reason: {
+    flaggedReason: {
       type: String,
       trim: true,
     },
-    elapsed_time: {
+    elapsedTime: {
       type: String,
       trim: true,
     },
-    start_latlang: {
+    startLatLang: {
       type: String,
     },
-    end_latlang: {
+    endLatLang: {
       type: String,
     },
-    device_name: {
+    deviceName: {
       type: String,
     },
-    brand: {
+    rideBrand: {
       type: String,
     },
-    workout_type: {
+    workoutType: {
       type: String,
     },
     description: {
@@ -92,23 +92,13 @@ const rideSchema = mongoose.Schema(
 rideSchema.plugin(toJSON);
 rideSchema.plugin(paginate);
 
-/**
- * Check if email is taken
- * @param {string} email - The user's email
- * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
- * @returns {Promise<boolean>}
- */
-// rideSchema.statics.isEmailTaken = async function (email, excludeUserId) {
-//   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
-//   return !!user;
-// };
 
 rideSchema.pre('save', async function (next) {
   next();
 });
 
 /**
- * @typedef User
+ * @typedef Ride
  */
 const Ride = mongoose.model('Ride', rideSchema);
 

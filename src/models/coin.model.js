@@ -23,6 +23,9 @@ const coinSchema = mongoose.Schema(
       trim: true,
       default: 'You have recieved',
     },
+    redeemed: {
+      type: Boolean, 
+    },
     description: {
       type: String,
     },
@@ -58,6 +61,6 @@ coinSchema.pre('save', async function (next) {
 /**
  * @typedef User
  */
-const Coin = mongoose.model('Ride', coinSchema);
+const Coin = mongoose.model('Coin', coinSchema);
 
 module.exports = Coin;

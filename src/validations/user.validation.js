@@ -6,10 +6,11 @@ const createUser = {
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
     name: Joi.string().required(),
+    dob: Joi.string(),
     role: Joi.string().valid('user', 'admin'),
     gender: Joi.string().valid('Male', 'Female', 'Other'),
     bike: Joi.string(),
-    puropse: Joi.string(),
+    purpose: Joi.string(),
     image: Joi.string(),
     weight: Joi.string(),
     height: Joi.string(),
@@ -26,10 +27,11 @@ const getUsers = {
   query: Joi.object().keys({
     email: Joi.string().email(),
     name: Joi.string(),
+    dob: Joi.string(),
     role: Joi.string().valid('user', 'admin'),
     gender: Joi.string().valid('Male', 'Female', 'Other'),
     bike: Joi.string(),
-    puropse: Joi.string(),
+    purpose: Joi.string(),
     image: Joi.string(),
     weight: Joi.string(),
     height: Joi.string(),
@@ -45,9 +47,15 @@ const getUsers = {
   }),
 };
 
-const getUser = {
+const getUserById = {
   params: Joi.object().keys({
     userId: Joi.string().custom(objectId),
+  }),
+};
+
+const getUserByEmail = {
+  params: Joi.object().keys({
+    email: Joi.string().email(),
   }),
 };
 
@@ -59,10 +67,11 @@ const updateUser = {
     .keys({
       email: Joi.string().email(),
       name: Joi.string(),
+      dob: Joi.string(),
       role: Joi.string().valid('user', 'admin'),
       gender: Joi.string().valid('Male', 'Female', 'Other'),
       bike: Joi.string(),
-      puropse: Joi.string(),
+      purpose: Joi.string(),
       image: Joi.string(),
       weight: Joi.string(),
       height: Joi.string(),
@@ -85,7 +94,8 @@ const deleteUser = {
 module.exports = {
   createUser,
   getUsers,
-  getUser,
+  getUserById,
+  getUserByEmail,
   updateUser,
   deleteUser,
 };
