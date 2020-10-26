@@ -16,8 +16,16 @@ const getUsers = catchAsync(async (req, res) => {
   res.send(result);
 });
 
-const getUser = catchAsync(async (req, res) => {
+const getUserById = catchAsync(async (req, res) => {
   const user = await userService.getUserById(req.params.userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  res.send(user);
+});
+
+const getUserByEmail = catchAsync(async (req, res) => {
+  const user = await userService.getUserByEmail(req.params.email);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -37,7 +45,8 @@ const deleteUser = catchAsync(async (req, res) => {
 module.exports = {
   createUser,
   getUsers,
-  getUser,
+  getUserById,
+  getUserByEmail,
   updateUser,
   deleteUser,
 };

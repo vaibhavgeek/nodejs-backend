@@ -5,18 +5,46 @@ components:
         properties:
           id:
             type: string
-          dob:
-            type: string
-          brand:
+          user:
+            type: object
+          destination:
             type: string  
-          email:
+          calories:
             type: string
-            format: email
-          name:
+          redeemed:
+            type: Boolean
+          route:
             type: string
-          role:
+          distance:
             type: string
-            enum: [user, admin]
+          destinationGPS:
+            type: string
+          purpose:
+            type: string
+          polyline:
+            type: string
+          speed:
+            type: string
+          flagged:
+            type: Boolean
+          flaggedReason:
+            type: string
+          elapsedTime:
+            type: string
+          startLatLang:
+            type: string
+          endLatLang:
+            type: string 
+          deviceName:
+            type: string
+          rideBrand:
+            type: string
+          workoutType:
+            type: string
+          description:
+            type: string
+          strava:
+            type: object 
         example:
           id: 5ebac534954b54139806c112
           email: fake@example.com
@@ -52,15 +80,6 @@ components:
             type: string
   
     responses:
-      DuplicateEmail:
-        description: Email already taken
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Error'
-            example:
-              code: 400
-              message: Email already taken
       Unauthorized:
         description: Unauthorized
         content:

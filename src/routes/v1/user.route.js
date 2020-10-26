@@ -11,10 +11,12 @@ router.route('/view').get(auth('getUsers'), validate(userValidation.getUsers), u
 
 router
   .route('/:userId')
-  .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
+  .get(auth('getUsers'), validate(userValidation.getUserById), userController.getUserById)
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
+router.get('/find/:email', auth('getUsers'), validate(userValidation.getUserByEmail), userController.getUserByEmail);
+  
 module.exports = router;
 
 /**
@@ -145,6 +147,37 @@ module.exports = router;
  */
 
 /**
+ * @swagger
+ * path:
+ *  /users/{email}:
+ *    get:
+ *      summary: Get a user
+ *      description: Fetch a user via email.
+ *      tags: [Users]
+ *      security:
+ *        - bearerAuth: []
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: User id
+ *      responses:
+ *        "200":
+ *          description: OK
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/User'
+ *        "401":
+ *          $ref: '#/components/responses/Unauthorized'
+ *        "403":
+ *          $ref: '#/components/responses/Forbidden'
+ *        "404":
+ *          $ref: '#/components/responses/NotFound'
+ */
+ /**
  * @swagger
  * path:
  *  /users/{id}:
