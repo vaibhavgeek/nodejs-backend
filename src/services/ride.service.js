@@ -1,5 +1,7 @@
 const Ride = require('../models/ride.model');
 const Coin = require('../models/coin.model');
+const ApiError = require('../utils/ApiError');
+const httpStatus = require('http-status');
 
 /**
  * Get Ride by id
@@ -78,10 +80,17 @@ const deleteRideById = async (rideId) => {
   return ride;
 };
 
-const redeemCoin = async(rideBody) => {
+const getSummaryByMonth = async(rideBody) => {
     
 };
 
+const getSummaryLifetime = async(rideBody) => {
+    
+};
+
+const redeemCoin = async(rideBody) => {
+    
+};
 // const createRides = async (rideBody) => {
 //   // console.log("ride body: ", rideBody);
 //   return await Promise.all(rideBody).then((singleride) => {
@@ -94,5 +103,8 @@ module.exports = {
   updateRideById,
   deleteRideById,
   queryRides,
-  createRides
+  createRides,
+  getSummaryByMonth,
+  getSummaryLifetime,
+  redeemCoin
 };

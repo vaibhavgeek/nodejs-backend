@@ -41,7 +41,7 @@ const deleteRide = catchAsync(async (req, res) => {
   console.log("params: ",req.params);
   console.log("body: ", req.body);
   console.log("query", req.query);
-  const ride = await rideService.deleteRide({ ...req.body, ...req.params });
+  const ride = await rideService.deleteRideById(req.params.ride);
   res.status(httpStatus.OK).send(ride);
 });
 

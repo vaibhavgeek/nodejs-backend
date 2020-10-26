@@ -18,11 +18,11 @@ router
   .patch(auth('manageRides'), validate(rideValidation.updateRide), rideController.updateRide)
   .delete(auth('manageRides'), validate(rideValidation.deleteRide), rideController.deleteRide);
 //get ride summary by month
-router.route('/:user/rides/summary/:month').get(auth('manageRides'), validate(rideValidation.getSummaryByMonth), rideController.getSummaryByMonth); 
+//router.route('/:user/rides/summary/:month').get(auth('manageRides'), validate(rideValidation.getSummaryByMonth), rideController.getSummaryByMonth); 
 // get lifetime rides summary 
-router.route('/:user/rides/summary/lifetime').get(auth('manageRides'), validate(rideValidation.getSummaryLifetime), rideController.getSummaryLifetime); 
+//router.route('/:user/rides/summary/lifetime').get(auth('manageRides'), validate(rideValidation.getSummaryLifetime), rideController.getSummaryLifetime); 
 // redeem coins 
-router.route('/:user/rides/:ride/redeemcoin').post(auth('manageRides') , validate(rideValidation.redeemCoin), rideController.redeemCoin);
+//router.route('/:user/rides/:ride/redeemcoin').post(auth('manageRides') , validate(rideValidation.redeemCoin), rideController.redeemCoin);
 
 module.exports = router;
 
