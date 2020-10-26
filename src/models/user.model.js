@@ -34,6 +34,10 @@ const userSchema = mongoose.Schema(
       },
       private: true, // used by the toJSON plugin
     },
+    gender: {
+      type: String,
+      trim: true,
+    },
     mobile: {
       type: String,
       trim: true,
@@ -87,7 +91,7 @@ const userSchema = mongoose.Schema(
       enum: roles,
       default: 'user',
     },
-    device_info: {
+    deviceInfo: {
       type: Object,
     },
   },
