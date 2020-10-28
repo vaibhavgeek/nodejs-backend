@@ -42,7 +42,7 @@ const deleteUser = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
-const deleteUser = catchAsync(async (req, res) => {
+const getCityByName = catchAsync(async (req, res) => {
   const city = await userService.getCityByName(req.params.city);
   res.status(httpStatus.OK).send(city);
 });
@@ -53,4 +53,5 @@ module.exports = {
   getUserByEmail,
   updateUser,
   deleteUser,
+  getCityByName
 };
