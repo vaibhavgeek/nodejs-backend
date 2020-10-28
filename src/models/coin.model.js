@@ -39,16 +39,6 @@ const coinSchema = mongoose.Schema(
 coinSchema.plugin(toJSON);
 coinSchema.plugin(paginate);
 
-/**
- * Check if email is taken
- * @param {string} email - The user's email
- * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
- * @returns {Promise<boolean>}
- */
-// coinSchema.statics.isEmailTaken = async function (email, excludeUserId) {
-//   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
-//   return !!user;
-// };
 
 coinSchema.pre('save', async function (next) {
   const coin = this;
