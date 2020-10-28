@@ -16,7 +16,7 @@ router
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
 router.get('/find/:email', auth('getUsers'), validate(userValidation.getUserByEmail), userController.getUserByEmail);
-  
+
 module.exports = router;
 
 /**
@@ -177,7 +177,7 @@ module.exports = router;
  *        "404":
  *          $ref: '#/components/responses/NotFound'
  */
- /**
+/**
  * @swagger
  * path:
  *  /users/{id}:
