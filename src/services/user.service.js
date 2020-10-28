@@ -2,6 +2,16 @@ const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
+
+/**
+ * Create a user
+ * @param {Object} City
+ * @returns {Promise<City>}
+ */
+const getCityByName = async (city) => {
+
+};
+
 /**
  * Create a user
  * @param {Object} userBody
@@ -87,4 +97,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  getCityByName,
 };

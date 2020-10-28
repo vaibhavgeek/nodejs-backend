@@ -91,6 +91,12 @@ const deleteUser = {
   }),
 };
 
+const getCityByName  = {
+  params: Joi.object().keys({
+    city: Joi.string(),
+  }),
+};
+
 module.exports = {
   createUser,
   getUsers,
@@ -98,4 +104,5 @@ module.exports = {
   getUserByEmail,
   updateUser,
   deleteUser,
+  getCityByName,
 };
