@@ -87,7 +87,8 @@ const deleteRideById = async (rideId) => {
  * @param {ObjectId} userId
  * @param {String} month
  * @returns {Promise<Rides>}
- */
+*/
+
 const getSummaryByMonth = async(userId, month) => {
   const rides = await Ride.find({ user: userId,
       "$expr": {
