@@ -1,7 +1,9 @@
 const Ride = require('../models/ride.model');
 const Coin = require('../models/coin.model');
+
 const ApiError = require('../utils/ApiError');
 const httpStatus = require('http-status');
+const { response } = require('express');
 
 /**
  * Get Ride by id
@@ -19,9 +21,9 @@ const getRideById = async (id) => {
  * @returns {Promise<Ride>}
  */
 const createRide = async (rideBody) => {
-   console.log("ride body: ", rideBody);
+  //console.log("ride body: ", rideBody);
   const ride = await Ride.create(rideBody);
-  console.log("ride created", ride);
+  //console.log("ride created", ride);
   return ride;
 };
 
@@ -32,7 +34,7 @@ const createRide = async (rideBody) => {
  */
 const createRides = async (rideArray) => {
  const rides = await Ride.insertMany(rideArray);
- console.log("ride created", rides);
+ //console.log("ride created", rides);
  return rides;
 };
 
@@ -81,40 +83,42 @@ const deleteRideById = async (rideId) => {
 };
 
 /**
- * Fetch Ride by id  and Month
+ * Get Ride Summary by month
+ * @param {ObjectId} userId
  * @param {String} month
- * @param {ObjectId} rideId
  * @returns {Promise<Rides>}
  */
-
-const getSummaryByMonth = async(rideId, month ) => {
-  const ride = await getRideById(rideId);
+const getSummaryByMonth = async(userId, month) => {
+  const rides = await Ride.find({ user: userId,
+      "$expr": {
+        "$eq":[{"$month": "$createdAt"}, month ]
+      }
+    });
   
+  return rides;
 };
-
 /**
- * Fetch Ride by id  and Month
- * @param {ObjectId} rideId
+ * Get Lifetime Rides of user
+ * @param {ObjectId} userId
  * @returns {Promise<Rides>}
  */
 
-const getSummaryLifetime = async(rideId) => {
-    
+const getSummaryLifetime = async(userId) => {
+    const rides = await Ride.find({user: userId});
+    console.log(rides);
+    return rides;
 };
 /**
- * Fetch Ride by id  and Month
+ * Redeem Coins of Rides
+ * @param {ObjectId} userId
  * @param {ObjectId} rideId
  * @returns {Promise<Rides>}
  */
-const redeemCoin = async(rideId) => {
-    
-};
-// const createRides = async (rideBody) => {
-//   // console.log("ride body: ", rideBody);
-//   return await Promise.all(rideBody).then((singleride) => {
-//     Ride.create(singleride);
-//   });
-// };
+const redeemCoin = async(userId, rideId) => {
+   const ride = await updateRideById(rideId, {"redeemed": true});
+   const coin = await Coin.create({"user": userId, "ride": rideId, "type": "ride", "redeemed": true, "coins": ride.coins});
+  return coin;
+  };
 
 module.exports = {
   createRide,

@@ -9,9 +9,21 @@ const rewardSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    image: {
+    shopUrl: {
       type: String,
       trim: true,
+    },
+    imageLandscape: {
+      type: String, 
+    },
+    imagePotrait: {
+      type: String,
+    },
+    isHighlighted: {
+      type: Boolean,
+    },
+    subtitle: {
+      type: String,
     },
     totalCount: {
       type: Number, 
@@ -25,9 +37,26 @@ const rewardSchema = mongoose.Schema(
     icon: {
       type: String,
     },
-    type:{
+    category:{
       type: String,
       enum: ['Products', 'Services']
+    },
+    rewardQuestions: {
+      type: Array
+    },
+    rewardContent: {
+      type: Array
+    },
+    dateRedeemed: {
+      type: Date,
+      set: d => new Date(d * 1000)
+    },
+    datePosted: {
+      type: Date,
+      set: d => new Date(d * 1000)
+    },
+    ratings: {
+      type: Number
     },
   },
   {

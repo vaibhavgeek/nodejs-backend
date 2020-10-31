@@ -95,10 +95,21 @@ const createRides = {
     })
   ),
 };
-
+const getSummaryByMonth = {
+  params: Joi.object().keys({
+    user: Joi.string().custom(objectId),
+    month: Joi.number(),
+})};
+  
+const getSummaryByLifetime = {
+    params: Joi.object().keys({
+      user: Joi.string().custom(objectId),
+})};
 module.exports = {
   createRide,
   createRides,
   updateRide,
   deleteRide,
+  getSummaryByMonth,
+  getSummaryByLifetime
 };
