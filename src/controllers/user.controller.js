@@ -38,9 +38,15 @@ const updateUser = catchAsync(async (req, res) => {
 });
 
 const deleteUser = catchAsync(async (req, res) => {
+  await userService.deleteUserById(req.params.userId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
+const getCityByName = catchAsync(async (req, res) => {
   const city = await userService.getCityByName(req.params.city);
   res.status(httpStatus.OK).send(city);
 });
+
 module.exports = {
   createUser,
   getUsers,
@@ -48,4 +54,5 @@ module.exports = {
   getUserByEmail,
   updateUser,
   deleteUser,
+  getCityByName
 };
