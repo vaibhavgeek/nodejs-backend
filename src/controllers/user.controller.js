@@ -46,6 +46,7 @@ const getCityByName = catchAsync(async (req, res) => {
   const city = await userService.getCityByName(req.params.city);
   res.status(httpStatus.OK).send(city);
 });
+
 module.exports = {
   createUser,
   getUsers,
