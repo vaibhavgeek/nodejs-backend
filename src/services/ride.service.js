@@ -80,15 +80,33 @@ const deleteRideById = async (rideId) => {
   return ride;
 };
 
-const getSummaryByMonth = async(rideBody) => {
-    
+/**
+ * Fetch Ride by id  and Month
+ * @param {String} month
+ * @param {ObjectId} rideId
+ * @returns {Promise<Rides>}
+ */
+
+const getSummaryByMonth = async(rideId, month ) => {
+  const ride = await getRideById(rideId);
+  
 };
 
-const getSummaryLifetime = async(rideBody) => {
+/**
+ * Fetch Ride by id  and Month
+ * @param {ObjectId} rideId
+ * @returns {Promise<Rides>}
+ */
+
+const getSummaryLifetime = async(rideId) => {
     
 };
-
-const redeemCoin = async(rideBody) => {
+/**
+ * Fetch Ride by id  and Month
+ * @param {ObjectId} rideId
+ * @returns {Promise<Rides>}
+ */
+const redeemCoin = async(rideId) => {
     
 };
 // const createRides = async (rideBody) => {
