@@ -11,7 +11,7 @@ const envVarsSchema = Joi.object()
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
     JWT_SECRET: Joi.string().required().description('JWT secret key'),
     JWT_ACCESS_EXPIRATION_DAYS: Joi.number().default(180).description('days after which access tokens expire'),
-    JWT_REFRESH_EXPIRATION_DAYS: Joi.number().default(30).description('days after which refresh tokens expire'),
+    JWT_REFRESH_EXPIRATION_DAYS: Joi.number().default(180).description('days after which refresh tokens expire'),
     SMTP_HOST: Joi.string().description('server that will send the emails'),
     SMTP_PORT: Joi.number().description('port to connect to the email server'),
     SMTP_USERNAME: Joi.string().description('username for email server'),
