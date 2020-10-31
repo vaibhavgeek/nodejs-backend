@@ -18,13 +18,13 @@ const coinSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    message: {
-      type: String,
+    coins: {
+      type: Number,
       trim: true,
-      default: 'You have recieved',
     },
     redeemed: {
-      type: Boolean, 
+      type: Boolean,
+      default: true, 
     },
     description: {
       type: String,
