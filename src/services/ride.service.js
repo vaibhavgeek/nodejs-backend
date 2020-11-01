@@ -90,16 +90,20 @@ const deleteRideById = async (rideId) => {
 */
 
 const getSummaryByMonth = async(userId, month) => {
-  const rides = await Ride.aggregate([
-    {"$project": {"month": {"$month" : "$createdAt"}}},
-    { "$match": { "user": userId , "month": month }},
-    { "$group": {
-        "$eq":[{"$month": "$createdAt"}, month ],
-        }
+  // const rides = await Ride.aggregate([
+  //   {"$project": {"month": {"$month" : "$createdAt"}}},
+  //   { "$match": { "user": userId , "month": month }},
+  //   { "$group": {
+  //       "$eq":[{"$month": "$createdAt"}, month ],
+  //       }
+  //   }
+  
+  // ]);
+  const rides = await Ride.find({ user: userId,
+    "$expr": {
+      "$eq":[{"$month": "$createdAt"}, month ]
     }
-  
-  ]);
-  
+  });
   return rides;
 };
 /**

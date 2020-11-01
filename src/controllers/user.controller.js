@@ -42,10 +42,10 @@ const deleteUser = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
-// const changeGear = catchAsync(async (req, res) => {
-//   const user = await userService.gearChnage(); 
-
-// });
+const changeGear = catchAsync(async (req, res) => {
+   const user = await userService.gearChange(); 
+   res.status(httpStatus.CREATED).send(user);
+ });
 
 const getCityByName = catchAsync(async (req, res) => {
   const city = await userService.getCityByName(req.params.city);
