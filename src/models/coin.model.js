@@ -29,11 +29,11 @@ const coinSchema = mongoose.Schema(
     description: {
       type: String,
     },
-  },
-  {
-    timestamps: true,
+    createdAt: {
+      type:Number, 
+      default: new Date().getTime(),
   }
-);
+});
 
 // add plugin that converts mongoose to json
 coinSchema.plugin(toJSON);

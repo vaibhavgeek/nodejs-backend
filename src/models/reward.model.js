@@ -61,12 +61,11 @@ const rewardSchema = mongoose.Schema(
     ratings: {
       type: Number
     },
-  },
-  {
-    timestamps: true,
+    createdAt: {
+      type:Number, 
+      default: new Date().getTime(),
   }
-);
-
+});
 // add plugin that converts mongoose to json
 rewardSchema.plugin(toJSON);
 rewardSchema.plugin(paginate);

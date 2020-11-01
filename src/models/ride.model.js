@@ -92,18 +92,17 @@ const rideSchema = mongoose.Schema(
       type: Number
     },
     startedAt: {
-      type: Date,
-      set: d => new Date(d * 1000)
+      type: Number,
+     
     },
     completedAt: {
-      type: Date,
-      set: d => new Date(d * 1000)
-    }
-  },
-  {
-    timestamps: true,
+      type: Number,
+    },
+    createdAt: {
+      type:Number, 
+      default: new Date().getTime(),
   }
-);
+});
 
 // add plugin that converts mongoose to json
 rideSchema.plugin(toJSON);
