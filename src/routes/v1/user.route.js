@@ -6,7 +6,7 @@ const userController = require('../../controllers/user.controller');
 
 const router = express.Router();
 
-router.post('/create', validate(userValidation.createUser), userController.createUser);
+router.post('/create', userController.createUser);
 router.route('/view').get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
 router
