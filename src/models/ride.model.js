@@ -90,6 +90,14 @@ const rideSchema = mongoose.Schema(
     },
     coins: {
       type: Number
+    },
+    startedAt: {
+      type: Date,
+      set: d => new Date(d * 1000)
+    },
+    completedAt: {
+      type: Date,
+      set: d => new Date(d * 1000)
     }
   },
   {

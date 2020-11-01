@@ -35,7 +35,8 @@ const createRide = {
     description: Joi.string(),
     strava: Joi.object(),
     coins: Joi.number(),
-
+    startedAt: Joi.string(),
+    completedAt: Joi.string(),
   }),
 };
 
@@ -69,7 +70,8 @@ const updateRide = {
     description: Joi.string(),
     strava: Joi.object(),
     coins: Joi.number(),
-
+    startedAt: Joi.string(),
+    completedAt: Joi.string(),
   }),
 };
 
@@ -103,6 +105,8 @@ const createRides = {
     description: Joi.string(),
     strava: Joi.object(),
     coins: Joi.number(),
+    startedAt: Joi.string(),
+    completedAt: Joi.string(),
     })
   ),
 };
