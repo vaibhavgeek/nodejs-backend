@@ -61,10 +61,16 @@ const rideSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    startLatLang: {
+    startLat: {
       type: String,
     },
-    endLatLang: {
+    endLang: {
+      type: String
+    },
+    endLat: {
+      type: String,
+    },
+    endLang: {
       type: String,
     },
     deviceName: {

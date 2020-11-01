@@ -1,34 +1,28 @@
 const Joi = require('@hapi/joi');
 const { objectId } = require('./custom.validation');
 
-const createRide = {
-  params: Joi.object().keys({
-    user: Joi.string().custom(objectId),
-  }),
+const createReward = {
   body: Joi.object().keys({
-    coin: Joi.string().custom(objectId),
-    destination: Joi.string(),
-    calories: Joi.string(),
-    redeemed: Joi.boolean(),
-    carbon: Joi.string(),
-    route: Joi.string(),
-    distance: Joi.string(),
-    destinationGPS: Joi.string(),
-    purpose: Joi.string(),
-    polyline: Joi.string(),
-    speed: Joi.string(),
-    flagged: Joi.boolean(),
-    flaggedReason: Joi.string(),
-    elapsedTime: Joi.string(),
-    startLatLang: Joi.string(),
-    endLatLang: Joi.string(),
-    deviceName: Joi.string(),
-    brand: Joi.string(),
-    workoutType: Joi.string(),
-    description: Joi.string(),
-    strava: Joi.object(),
+    title: Joi.string().custom(objectId),
+    shopUrl: Joi.string(),
+    imageLandscape: Joi.string(),
+    imagePotrait: Joi.boolean(),
+    isHighlighted: Joi.string(),
+    subtitle: Joi.string(),
+    totalCount: Joi.string(),
+    availableCount: Joi.string(),
+    coins: Joi.number(),
+    icon: Joi.string(),
+    category: Joi.string(),
+    rewardQuestions: Joi.array(),
+    rewardContent: Joi.array(),
+    tag: Joi.string(),
+    dateExpired: Joi.string(),
+    ratings: Joi.number(),
+    coupons: Joi.any(),
   }),
 };
+
 
 module.exports = {
   createReward,
