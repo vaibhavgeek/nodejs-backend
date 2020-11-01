@@ -17,7 +17,7 @@ router
 
 router.get('/find/:email', auth('getUsers'), validate(userValidation.getUserByEmail), userController.getUserByEmail);
 
-router.post('/:user/gearc', validate(userValidation.createUser), userController.changeGear);
+//router.post('/:user/gearc', validate(userValidation.gearChange), userController.changeGear);
 
 //router.get('/cities/:query', auth('getUsers'), validate(userValidation.getCityByName), userController.getCityByName);
 

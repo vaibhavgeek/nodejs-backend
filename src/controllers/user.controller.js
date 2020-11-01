@@ -42,6 +42,11 @@ const deleteUser = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+// const changeGear = catchAsync(async (req, res) => {
+//   const user = await userService.gearChnage(); 
+
+// });
+
 const getCityByName = catchAsync(async (req, res) => {
   const city = await userService.getCityByName(req.params.city);
   res.status(httpStatus.OK).send(city);
