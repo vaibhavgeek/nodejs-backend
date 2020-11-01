@@ -59,5 +59,6 @@ module.exports = {
   getUserByEmail,
   updateUser,
   deleteUser,
-  getCityByName
+  getCityByName,
+  changeGear
 };

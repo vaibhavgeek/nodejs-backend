@@ -99,6 +99,13 @@ const getCityByName  = {
   }),
 };
 
+const gearChange  = {
+  params: Joi.object().keys({
+    userId: Joi.string().custom(objectId),
+  }),
+  body: Joi.object(),
+};
+
 module.exports = {
   createUser,
   getUsers,
@@ -107,4 +114,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getCityByName,
+  gearChange
 };
