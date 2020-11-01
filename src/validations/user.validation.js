@@ -81,6 +81,7 @@ const updateUser = {
       location: Joi.string(),
       department: Joi.string(),
       device_info: Joi.object(),
+      gear: Joi.object(),
     })
     .min(1),
 };
