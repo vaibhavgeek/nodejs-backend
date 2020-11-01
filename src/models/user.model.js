@@ -36,55 +36,53 @@ const userSchema = mongoose.Schema(
     },
     gender: {
       type: String,
-      trim: true,
+      
     },
     mobile: {
       type: String,
-      trim: true,
+      
     },
     city: {
       type: String,
-      trim: true,
+      
     },
     location: {
       type: String,
-      trim: true,
+      
     },
     dob: {
       type: String,
-      trim: true,
+      
     },
     height: {
       type: String,
-      trim: true,
+      
     },
     weight: {
       type: String,
-      trim: true,
     },
     bike: {
       type: String,
-      trim: true,
     },
     purpose: {
       type: String,
-      trim: true,
+      
     },
     referral: {
       type: String,
-      trim: true,
+      
     },
     image: {
       type: String,
-      trim: true,
+      
     },
     brand: {
       type: String,
-      trim: true,
+      
     },
     department: {
       type: String,
-      trim: true,
+      
     },
     role: {
       type: String,
