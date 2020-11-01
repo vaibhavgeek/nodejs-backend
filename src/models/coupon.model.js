@@ -19,6 +19,10 @@ const couponSchema = mongoose.Schema(
     userId: {
       type: mongoose.SchemaTypes.ObjectId,
     },
+    expiryDate: {
+      type: Date,
+      set: d => new Date(d * 1000)
+    },
     redeemed:{
       type: Boolean,
     }

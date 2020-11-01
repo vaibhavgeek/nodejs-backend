@@ -44,6 +44,7 @@ const getUsers = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
+    gear: Joi.object(),
   }),
 };
 

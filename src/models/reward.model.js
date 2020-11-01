@@ -44,10 +44,13 @@ const rewardSchema = mongoose.Schema(
     rewardQuestions: {
       type: Array
     },
+    tag: {
+      type: String
+    },
     rewardContent: {
       type: Array
     },
-    dateRedeemed: {
+    dateExpired: {
       type: Date,
       set: d => new Date(d * 1000)
     },

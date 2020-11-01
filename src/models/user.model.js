@@ -117,6 +117,10 @@ const userSchema = mongoose.Schema(
     },
   {
     timestamps: true,
+    fieldType: Number,
+      dateFunc: function () {
+        return Math.round(new Date().getTime()/1000); 
+      },
   }
 );
 
