@@ -94,7 +94,27 @@ const userSchema = mongoose.Schema(
     deviceInfo: {
       type: Object,
     },
-  },
+    gear: {
+      type: Object,
+      properties: {
+        gear: {
+          type: String,
+        },
+        frontGear: {
+          type: String,
+        },
+        rearGear: {
+          type: String,
+        },
+        remainingTrips: {
+          type: String,
+        },
+        remainingDistance: {
+          type: String,
+        },
+        },
+      },
+    },
   {
     timestamps: true,
   }
