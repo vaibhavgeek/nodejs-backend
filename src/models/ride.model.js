@@ -88,6 +88,9 @@ const rideSchema = mongoose.Schema(
     strava: {
       type: Object,
     },
+    coins: {
+      type: Number
+    }
   },
   {
     timestamps: true,

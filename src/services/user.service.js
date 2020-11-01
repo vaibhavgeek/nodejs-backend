@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { User } = require('../models');
+const { User, Coin } = require('../models');
 const ApiError = require('../utils/ApiError');
 const fs = require('fs');
 
@@ -91,6 +91,13 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+const gearChange = async (userId, coins, body) => {
+  const coin = await Coin.create({"user":userId, "type": "gearUpgrade", "coins": coins, "redeemed": false });
+  const user = await User.updateOne({"id": userId}, body);
+  return user;
+};
+
+
 module.exports = {
   createUser,
   queryUsers,
@@ -99,4 +106,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   getCityByName,
+  gearChange
 };
