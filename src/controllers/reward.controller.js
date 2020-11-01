@@ -12,9 +12,24 @@ const createReward = catchAsync(async (req, res) => {
   console.log("body: ", req.body);
   console.log("file: ", req.files.coupons[0]);
   console.log("query", req.query);
-
-  //const reward = {};
   const reward = await rewardService.createReward(req.body);
+
+  try {
+  fs.createReadStream(req.files.coupons[0].path)
+    .pipe(csv())
+    .on('data', (row) => {
+      console.log(row);
+       const coupon =  rewardService.createCoupons(row, rewardId);
+       console.log(coupon);
+    })
+    .on('end', () => {
+      console.log('CSV file successfully processed');
+    });
+    fs.unlinkSync(req.files.coupons[0].path);
+  } catch (e) {
+  
+  }
+  //const reward = await rewardService.createReward(req.body);
   res.status(httpStatus.CREATED).send(reward);
 });
 

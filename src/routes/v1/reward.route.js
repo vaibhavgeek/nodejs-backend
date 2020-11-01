@@ -6,7 +6,7 @@ const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
 const rewardValidation = require('../../validations/reward.validation');
 
-var upload = multer()
+var upload = multer({ dest: 'uploads/' })
 
 const router = express.Router();
 
