@@ -36,27 +36,21 @@ const userSchema = mongoose.Schema(
     },
     gender: {
       type: String,
-      
     },
     mobile: {
-      type: String,
-      
+      type: String,      
     },
     city: {
-      type: String,
-      
+      type: String,      
     },
     location: {
-      type: String,
-      
+      type: String,     
     },
     dob: {
-      type: String,
-      
+      type: Number,
     },
     height: {
       type: String,
-      
     },
     weight: {
       type: String,
@@ -65,24 +59,19 @@ const userSchema = mongoose.Schema(
       type: String,
     },
     purpose: {
-      type: String,
-      
+      type: String,      
     },
     referral: {
-      type: String,
-      
+      type: String,      
     },
     image: {
-      type: String,
-      
+      type: String,      
     },
     brand: {
-      type: String,
-      
+      type: String,     
     },
     department: {
-      type: String,
-      
+      type: String,      
     },
     role: {
       type: String,
