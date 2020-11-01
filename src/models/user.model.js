@@ -101,15 +101,11 @@ const userSchema = mongoose.Schema(
         },
         },
       },
+    createdAt: {
+      type:Number, 
+      default: new Date().getTime(),
     },
-  {
-    timestamps: true,
-    fieldType: Number,
-      dateFunc: function () {
-        return Math.round(new Date().getTime()/1000); 
-      },
-  }
-);
+  });
 
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);

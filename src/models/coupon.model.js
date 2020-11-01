@@ -25,12 +25,12 @@ const couponSchema = mongoose.Schema(
     },
     redeemed:{
       type: Boolean,
-    }
-  },
-  {
-    timestamps: true,
+    },
+    createdAt: {
+      type:Number, 
+      default: new Date().getTime(),
   }
-);
+});
 
 // add plugin that converts mongoose to json
 couponSchema.plugin(toJSON);
