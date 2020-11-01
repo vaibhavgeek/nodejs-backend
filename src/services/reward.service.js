@@ -11,15 +11,21 @@ const ApiError = require('../utils/ApiError');
 
 /**
  * Create a Reward
- * @param {Object} userBody
- * @returns {Promise<User>}
+ * @param {Object} body
+ * @returns {Promise<Reward>}
  */
-const createReward = async (userBody) => {
-  if (await User.isEmailTaken(userBody.email)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  }
-  const user = await User.create(userBody);
-  return user;
+const createReward = async (body) => {
+  const reward = await Reward.create(body);
+  return reward;
+};
+
+const createCoupons = (body, rewardId) => {
+  body.forEach(function(reward) 
+  { 
+    reward.rewardId = rewardId;
+  });
+  const reward = Coupon.create(body);
+  return reward;
 };
 
 /**
@@ -95,4 +101,5 @@ module.exports = {
     getRedeemedRewardsByUser,
     deleteRewardById,
     redeemRewardById,
+    createCoupons
 };

@@ -26,7 +26,7 @@ const couponSchema = mongoose.Schema(
     redeemed:{
       type: Boolean,
     },
-    createdAt: {
+    redeemedAt: {
       type:Number, 
       default: new Date().getTime(),
   }
