@@ -6,7 +6,7 @@ const shortid = require('shortid');
 
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
-
+const moment = require("moment");
 
 
 /**
@@ -19,12 +19,20 @@ const createReward = async (body) => {
   return reward;
 };
 
-const createCoupons = (body, rewardId) => {
-  body.forEach(function(reward) 
-  { 
-    reward.rewardId = rewardId;
-  });
-  const reward = Coupon.create(body);
+const createCoupons = async (body, rewardId) => {
+  // console.log(`body: ${JSON.stringify(body)}`)
+  // body.forEach(function(reward) 
+  // { 
+  //   reward.rewardId = rewardId;
+  // });
+  // body.rewardId = rewardId;
+  const obj = JSON.parse(JSON.stringify(body));
+  obj.rewardId = rewardId;
+  obj.expiryDate = moment(obj.expiryDate).valueOf();
+  console.log(`OBJ: ${JSON.stringify(obj)}`);
+  const reward = await Coupon.create(obj);
+  Object.assign(reward, obj);
+  await reward.save();
   return reward;
 };
 

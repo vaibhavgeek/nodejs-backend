@@ -5,7 +5,7 @@ const fs = require('fs');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { rewardService } = require('../services');
+const rewardService = require('../services/reward.service');
 
 const createReward = catchAsync(async (req, res) => {
   console.log("params: ",req.params);
@@ -17,10 +17,9 @@ const createReward = catchAsync(async (req, res) => {
   try {
   fs.createReadStream(req.files.coupons[0].path)
     .pipe(csv())
-    .on('data', (row) => {
-      console.log(row);
-       const coupon =  rewardService.createCoupons(row, rewardId);
-       console.log(coupon);
+    .on('data', async (row) => {
+       const coupon =  await rewardService.createCoupons(row, reward.id);
+       console.log(JSON.stringify(coupon));
     })
     .on('end', () => {
       console.log('CSV file successfully processed');
