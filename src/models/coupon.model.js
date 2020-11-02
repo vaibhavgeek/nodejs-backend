@@ -12,7 +12,7 @@ const couponSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    orderNumer: {
+    orderNumber: {
       type: String,
       trim: true,
     },
