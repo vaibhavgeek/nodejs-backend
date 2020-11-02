@@ -39,7 +39,7 @@ const rewardSchema = mongoose.Schema(
     },
     category:{
       type: String,
-      enum: ['Products', 'Services']
+      enum: ['Products', 'Services', 'Products.Services']
     },
     rewardQuestions: {
       type: Array
