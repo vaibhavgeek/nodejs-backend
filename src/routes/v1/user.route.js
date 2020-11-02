@@ -19,6 +19,11 @@ router.get('/find/:email', auth('getUsers'), validate(userValidation.getUserByEm
 
 router.post('/:userId/gearc', validate(userValidation.gearChange), userController.changeGear);
 
+router
+  .route('/:userId/coins')
+  .post(auth('getUsers') , userController.updateCoins)
+  .get(auth('getUsers'), userController.getCoins);
+
 //router.get('/cities/:query', auth('getUsers'), validate(userValidation.getCityByName), userController.getCityByName);
 
 module.exports = router;
