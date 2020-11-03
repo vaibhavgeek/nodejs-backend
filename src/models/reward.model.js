@@ -51,21 +51,18 @@ const rewardSchema = mongoose.Schema(
       type: Array
     },
     dateExpired: {
-      type: Date,
-      set: d => new Date(d * 1000)
+      type: Number,
     },
     datePosted: {
-      type: Date,
-      set: d => new Date(d * 1000)
+      type: Number,
     },
     ratings: {
       type: Number
-    },
-    createdAt: {
-      type:Number, 
-      default: new Date().getTime(),
-  }
-});
+    }
+  },
+  {
+    timestamps: true,
+  });
 // add plugin that converts mongoose to json
 rewardSchema.plugin(toJSON);
 rewardSchema.plugin(paginate);

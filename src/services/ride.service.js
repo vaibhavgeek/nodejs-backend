@@ -125,7 +125,7 @@ const getSummaryLifetime = async(userId) => {
  */
 const redeemCoin = async(userId, rideId) => {
    const ride = await updateRideById(rideId, {"redeemed": true});
-   const coin = await Coin.create({"user": userId, "ride": rideId, "type": "ride", "redeemed": true, "coins": ride.coins});
+   const coin = await Coin.create({"user": userId, "ride": rideId, "type": "ride", "redeemed": false, "coins": ride.coins});
   return coin;
   };
 
