@@ -98,7 +98,7 @@ const redeemRewardById = async(rewardId, userId) => {
     const tranxid = shortid.generate();
   const reward = await getRewardById(rewardId, { $inc: { availableCount: -1 } });
   const coupon = await Coupon.findOneAndUpdate({ rewardId }, { redeemed: true, orderNumber: tranxid, userId });
-   return coupon;
+   return { coupon, reward };
    };
 
 module.exports = {
