@@ -73,7 +73,7 @@ const updateRewardById = async (rewardId, updateBody) => {
 };
 
 const getRedeemedRewardsByUser = async (userId) => {
-  const coupons = await Coupon.find({user: userId});
+  const coupons = await Coupon.find({user: userId , "redeemed": true});
   return coupons;
   };
 
