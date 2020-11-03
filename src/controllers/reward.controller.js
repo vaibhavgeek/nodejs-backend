@@ -36,31 +36,6 @@ const createReward = catchAsync(async (req, res) => {
 });
 
 
-const createRewardFile = catchAsync(async (req, res) => {
-  console.log("params: ",req.params);
-  console.log("body: ", req.body);
-  console.log("file: ", req.files.coupons[0]);
-  console.log("query", req.query);
-  const reward = await rewardService.createReward(req.body);
-
-  try {
-  fs.createReadStream(req.files.coupons[0].path)
-    .pipe(csv())
-    .on('data', async (row) => {
-       const coupon =  await rewardService.createCoupons(row, reward.id);
-       console.log(JSON.stringify(coupon));
-    })
-    .on('end', () => {
-      console.log('CSV file successfully processed');
-    });
-    fs.unlinkSync(req.files.coupons[0].path);
-  } catch (e) {
-  
-  }
-  //const reward = await rewardService.createReward(req.body);
-  res.status(httpStatus.CREATED).send(reward);
-});
-
 const getRewards = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['category', 'tag']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -75,6 +50,7 @@ const getRewardById = catchAsync(async (req, res) => {
   }
   res.send(reward);
 });
+
 
 const updateReward = catchAsync(async (req, res) => {
   const reward = await rewardService.updateRewardById(req.params.rewardId, req.body);

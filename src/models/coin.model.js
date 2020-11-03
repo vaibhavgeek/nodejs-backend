@@ -22,10 +22,6 @@ const coinSchema = mongoose.Schema(
       type: Number,
       trim: true,
     },
-    redeemed: {
-      type: Boolean,
-      default: true, 
-    },
     description: {
       type: String,
     },

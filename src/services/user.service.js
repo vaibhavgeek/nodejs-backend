@@ -102,7 +102,6 @@ const gearChange = async (userId, coins, body) => {
 };
 
 const getCoins = async (userId) => {
-  //const coin = await Coin.find({user: userId});
   const coin = await Coin.aggregate([
     {
       $match: {user: mongoose.Types.ObjectId(userId)}

@@ -20,12 +20,7 @@ const createReward = async (body) => {
 };
 
 const createCoupons = async (body, rewardId) => {
-  // console.log(`body: ${JSON.stringify(body)}`)
-  // body.forEach(function(reward) 
-  // { 
-  //   reward.rewardId = rewardId;
-  // });
-  // body.rewardId = rewardId;
+
   const obj = JSON.parse(JSON.stringify(body));
   obj.rewardId = rewardId;
   obj.expiryDate = moment(obj.expiryDate).valueOf();
@@ -94,11 +89,21 @@ const deleteRewardById = async (userId) => {
   return user;
 };
 
-const redeemRewardById = async(rewardId, rideId) => {
+const redeemRewardById = async(rewardId,userId) => {
     const tranxid = shortid.generate();
-    const reward = await getRewardById(rideId, {"$inc": {"availableCount": -1}});
-    const coupon = await Coupon.findOneAndUpdate({ "rewardId": rewardId }, {"redeemed": true, "orderNumer": tranxid, "userId": userId});
-   return coupon;
+    console.log(tranxid);
+    const reward = await getRewardById(rewardId, {"$inc": {"availableCount": -1}});
+    console.log(reward);
+    const coupon = await Coupon.findOne({ "rewardId": rewardId });
+    if (!coupon) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'No Coupon found for this reward');
+    }
+    else
+    {
+      await Object.assign(coupon,{"redeemed": true, "orderNumer": tranxid, "userId": userId});
+      coupon.save();
+    }
+    return coupon;
    };
 
 module.exports = {
