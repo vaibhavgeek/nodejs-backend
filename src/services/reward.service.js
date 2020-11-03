@@ -41,7 +41,9 @@ const createCoupons = async (body, rewardId) => {
  * @returns {Promise<QueryResult>}
  */
 const queryRewards = async (filter, options) => {
-  const rewards = await Reward.paginate(filter, options);
+  const secondsSinceEpoch = Math.round(Date.now() / 1000)
+  
+  const rewards = await Reward.paginate({ ...{"dateExpired" : { $gte : secondsSinceEpoch } , "availableCount" : { $gte : 1 }}, ...filter}, options);
   return rewards;
 };
 
