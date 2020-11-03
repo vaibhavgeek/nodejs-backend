@@ -43,9 +43,20 @@ const deleteUser = catchAsync(async (req, res) => {
 });
 
 const changeGear = catchAsync(async (req, res) => {
-   const user = await userService.gearChange(req.params.userId, req.body.coins, req.body); 
+ const user = await userService.gearChange(req.params.userId, req.body.coins, req.body.gearchange); 
+
    res.status(httpStatus.CREATED).send(user);
  });
+
+const updateCoins = catchAsync(async (req, res) => {
+  const userCoins = await userService.updateCoins(req.params.userId, req.body.coins); 
+  res.status(httpStatus.CREATED).send(userCoins);
+});
+
+const getCoins = catchAsync(async (req, res) => {
+  const userCoins = await userService.getCoins(req.params.userId); 
+  res.status(httpStatus.OK).send(userCoins);
+});
 
 const getCityByName = catchAsync(async (req, res) => {
   const city = await userService.getCityByName(req.params.city);
@@ -60,5 +71,7 @@ module.exports = {
   updateUser,
   deleteUser,
   getCityByName,
-  changeGear
+  changeGear,
+  updateCoins,
+  getCoins
 };

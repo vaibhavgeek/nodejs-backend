@@ -3,6 +3,7 @@ const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const fs = require('fs');
 const Coin = require('../models/coin.model');
+const mongoose = require("mongoose");
 
 
 /**
@@ -93,11 +94,48 @@ const deleteUserById = async (userId) => {
 };
 
 const gearChange = async (userId, coins, body) => {
-  const coin = await Coin.create({"user":userId, "type": "gearUpgrade", "coins": coins, "redeemed": false });
-  const user = await User.updateOne({"id": userId}, body);
+  const coin = await Coin.create({"user":userId, "type": "gearUpgrade", "coins": coins });
+  const user = await getUserById(userId);
+  Object.assign(user, body);
+  await user.save();
   return user;
 };
 
+const getCoins = async (userId) => {
+  const coin = await Coin.aggregate([
+    {
+      $match: {user: mongoose.Types.ObjectId(userId)}
+    },
+    {
+      $group: {
+        _id: null,
+        total: {
+          $sum: "$coins"
+        }
+      }
+    }
+  ]);
+  console.log(coin);
+  return coin;
+};
+
+const updateCoins = async (userId, coins) => {
+  const coin = await Coin.create({"user":userId, "type": "redeemReward", "coins": coins }); 
+  const totalcoins = await Coin.aggregate([
+    {
+      $match: {user: mongoose.Types.ObjectId(userId)}
+    },
+    {
+      $group: {
+        _id: null,
+        total: {
+          $sum: "$coins"
+        }
+      }
+    }
+  ]);
+  return totalcoins;
+};
 
 module.exports = {
   createUser,
@@ -107,5 +145,7 @@ module.exports = {
   updateUserById,
   deleteUserById,
   getCityByName,
-  gearChange
+  gearChange,
+  getCoins,
+  updateCoins
 };
