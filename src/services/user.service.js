@@ -1,7 +1,8 @@
 const httpStatus = require('http-status');
-const { User, Coin } = require('../models');
+const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const fs = require('fs');
+const Coin = require('../models/coin.model');
 
 
 /**
