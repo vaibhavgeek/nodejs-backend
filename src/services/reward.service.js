@@ -106,6 +106,7 @@ const redeemRewardById = async(rewardId,userId) => {
       coupon.save();
     }
     return coupon;
+
    };
 
 module.exports = {
