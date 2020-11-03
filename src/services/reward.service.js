@@ -94,10 +94,10 @@ const deleteRewardById = async (userId) => {
   return user;
 };
 
-const redeemRewardById = async(rewardId, rideId) => {
+const redeemRewardById = async(rewardId, userId) => {
     const tranxid = shortid.generate();
-    const reward = await getRewardById(rideId, {"$inc": {"availableCount": -1}});
-    const coupon = await Coupon.findOneAndUpdate({ "rewardId": rewardId }, {"redeemed": true, "orderNumer": tranxid, "userId": userId});
+  const reward = await getRewardById(rewardId, { $inc: { availableCount: -1 } });
+  const coupon = await Coupon.findOneAndUpdate({ rewardId }, { redeemed: true, orderNumber: tranxid, userId });
    return coupon;
    };
 
