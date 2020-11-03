@@ -43,7 +43,8 @@ const deleteUser = catchAsync(async (req, res) => {
 });
 
 const changeGear = catchAsync(async (req, res) => {
-   const user = await userService.gearChange(req.params.userId, req.body.coins, req.body.gearchange); 
+ const user = await userService.gearChange(req.params.userId, req.body.coins, req.body.gearchange); 
+
    res.status(httpStatus.CREATED).send(user);
  });
 
