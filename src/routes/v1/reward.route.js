@@ -18,9 +18,11 @@ router.route('/create').post(auth('manageRewards'), couponsUpload , rewardContro
 // view all rewards and filter by options 
 router.route('/all/:user').get(auth('useRewards') , rewardController.getRewards);
 
-// get reward by id 
+// get reward by id for admin
 router.route('/:rewardId').get(auth('useRewards') , rewardController.getRewardById);
 
+// get reward for the app users
+//router.route('/:rewardId/view').get(auth('useRewards') , rewardController.getRewardWithCoupon);
 
 // update reward by id 
 router.route('/:rewardId').patch(auth('useRewards') , rewardController.updateReward);
