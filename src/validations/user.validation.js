@@ -93,13 +93,13 @@ const deleteUser = {
   }),
 };
 
-const getCityByName  = {
+const getCityByName = {
   params: Joi.object().keys({
     city: Joi.string(),
   }),
 };
 
-const gearChange  = {
+const gearChange = {
   params: Joi.object().keys({
     userId: Joi.string().custom(objectId),
   }),
@@ -114,5 +114,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getCityByName,
-  gearChange
+  gearChange,
 };

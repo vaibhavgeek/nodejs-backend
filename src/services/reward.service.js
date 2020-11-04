@@ -1,13 +1,11 @@
-const Reward = require('../models/reward.model');
-const Coupon = require('../models/coupon.model');
-
+/* eslint-disable no-console */
 const httpStatus = require('http-status');
 const shortid = require('shortid');
-
-const { User } = require('../models');
+const moment = require('moment');
+const Reward = require('../models/reward.model');
+const Coupon = require('../models/coupon.model');
 const ApiError = require('../utils/ApiError');
-const moment = require("moment");
-
+const { userService } = require('.');
 
 /**
  * Create a Reward
@@ -20,7 +18,6 @@ const createReward = async (body) => {
 };
 
 const createCoupons = async (body, rewardId) => {
-
   const obj = JSON.parse(JSON.stringify(body));
   obj.rewardId = rewardId;
   obj.expiryDate = moment(obj.expiryDate).valueOf();
@@ -61,7 +58,7 @@ const getRewardById = async (id) => {
  * @returns {Promise<User>}
  */
 const updateRewardById = async (rewardId, updateBody) => {
-  const reward = await getUserById(rewardId);
+  const reward = await userService.getUserById(rewardId);
   if (!reward) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Reward not found');
   }
@@ -71,9 +68,9 @@ const updateRewardById = async (rewardId, updateBody) => {
 };
 
 const getRedeemedRewardsByUser = async (userId) => {
-  const coupons = await Coupon.find({user: userId});
+  const coupons = await Coupon.find({ user: userId });
   return coupons;
-  };
+};
 
 /**
  * Delete user by id
@@ -81,7 +78,7 @@ const getRedeemedRewardsByUser = async (userId) => {
  * @returns {Promise<User>}
  */
 const deleteRewardById = async (userId) => {
-  const user = await getUserById(userId);
+  const user = await userService.getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -89,31 +86,28 @@ const deleteRewardById = async (userId) => {
   return user;
 };
 
-const redeemRewardById = async(rewardId,userId) => {
-    const tranxid = shortid.generate();
-    console.log(tranxid);
-    const reward = await getRewardById(rewardId, {"$inc": {"availableCount": -1}});
-    console.log(reward);
-    const coupon = await Coupon.findOne({ "rewardId": rewardId });
-    if (!coupon) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'No Coupon found for this reward');
-    }
-    else
-    {
-      await Object.assign(coupon,{"redeemed": true, "orderNumer": tranxid, "userId": userId});
-      coupon.save();
-    }
-    return coupon;
-
-   };
+const redeemRewardById = async (rewardId, userId) => {
+  const tranxid = shortid.generate();
+  console.log(tranxid);
+  const reward = await getRewardById(rewardId, { $inc: { availableCount: -1 } });
+  console.log(reward);
+  const coupon = await Coupon.findOne({ rewardId });
+  if (!coupon) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No Coupon found for this reward');
+  } else {
+    Object.assign(coupon, { redeemed: true, orderNumber: tranxid, userId });
+    coupon.save();
+  }
+  return coupon;
+};
 
 module.exports = {
-    createReward,
-    queryRewards,
-    getRewardById,
-    updateRewardById,
-    getRedeemedRewardsByUser,
-    deleteRewardById,
-    redeemRewardById,
-    createCoupons
+  createReward,
+  queryRewards,
+  getRewardById,
+  updateRewardById,
+  getRedeemedRewardsByUser,
+  deleteRewardById,
+  redeemRewardById,
+  createCoupons,
 };

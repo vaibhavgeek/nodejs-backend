@@ -4,6 +4,7 @@ const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const rideRoute = require('./ride.route');
 const rewardRoute = require('./reward.route');
+
 const router = express.Router();
 
 router.use('/api/auth', authRoute);
