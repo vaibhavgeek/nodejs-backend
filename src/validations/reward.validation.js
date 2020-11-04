@@ -23,7 +23,6 @@ const createReward = {
   }),
 };
 
-
 module.exports = {
   createReward,
 };

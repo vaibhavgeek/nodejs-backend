@@ -43,18 +43,18 @@ const deleteUser = catchAsync(async (req, res) => {
 });
 
 const changeGear = catchAsync(async (req, res) => {
- const user = await userService.gearChange(req.params.userId, req.body.coins, req.body.gearchange); 
+  const user = await userService.gearChange(req.params.userId, req.body.coins, req.body.gearchange);
 
-   res.status(httpStatus.CREATED).send(user);
- });
+  res.status(httpStatus.CREATED).send(user);
+});
 
 const updateCoins = catchAsync(async (req, res) => {
-  const userCoins = await userService.updateCoins(req.params.userId, req.body.coins); 
+  const userCoins = await userService.updateCoins(req.params.userId, req.body.coins);
   res.status(httpStatus.CREATED).send(userCoins);
 });
 
 const getCoins = catchAsync(async (req, res) => {
-  const userCoins = await userService.getCoins(req.params.userId); 
+  const userCoins = await userService.getCoins(req.params.userId);
   res.status(httpStatus.OK).send(userCoins);
 });
 
@@ -73,5 +73,5 @@ module.exports = {
   getCityByName,
   changeGear,
   updateCoins,
-  getCoins
+  getCoins,
 };
