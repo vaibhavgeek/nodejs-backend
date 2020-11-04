@@ -21,10 +21,10 @@ router.post('/:userId/gearc', validate(userValidation.gearChange), userControlle
 
 router
   .route('/:userId/coins')
-  .post(auth('getUsers') , userController.updateCoins)
+  .post(auth('getUsers'), userController.updateCoins)
   .get(auth('getUsers'), userController.getCoins);
 
-//router.get('/cities/:query', auth('getUsers'), validate(userValidation.getCityByName), userController.getCityByName);
+// router.get('/cities/:query', auth('getUsers'), validate(userValidation.getCityByName), userController.getCityByName);
 
 module.exports = router;
 

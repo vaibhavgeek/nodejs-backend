@@ -1,19 +1,17 @@
+/* eslint-disable no-console */
 const httpStatus = require('http-status');
+const mongoose = require('mongoose');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
-const fs = require('fs');
 const Coin = require('../models/coin.model');
-const mongoose = require("mongoose");
-
 
 /**
  * Create a user
  * @param {Object} City
  * @returns {Promise<City>}
  */
-const getCityByName = async (city) => {
-
-};
+// eslint-disable-next-line no-unused-vars
+const getCityByName = async (_) => {};
 
 /**
  * Create a user
@@ -94,7 +92,7 @@ const deleteUserById = async (userId) => {
 };
 
 const gearChange = async (userId, coins, body) => {
-  const coin = await Coin.create({"user":userId, "type": "gearUpgrade", "coins": coins });
+  // const coin = await Coin.create({ user: userId, type: 'gearUpgrade', coins });
   const user = await getUserById(userId);
   Object.assign(user, body);
   await user.save();
@@ -104,37 +102,38 @@ const gearChange = async (userId, coins, body) => {
 const getCoins = async (userId) => {
   const coin = await Coin.aggregate([
     {
-      $match: {user: mongoose.Types.ObjectId(userId)}
+      $match: { user: mongoose.Types.ObjectId(userId) },
     },
     {
       $group: {
         _id: null,
         total: {
-          $sum: "$coins"
-        }
-      }
-    }
+          $sum: '$coins',
+        },
+      },
+    },
   ]);
   console.log(coin);
   return coin;
 };
 
+// eslint-disable-next-line no-unused-vars
 const updateCoins = async (userId, coins) => {
-  const coin = await Coin.create({"user":userId, "type": "redeemReward", "coins": coins }); 
-  const totalcoins = await Coin.aggregate([
+  // const coin = await Coin.create({ user: userId, type: 'redeemReward', coins });
+  const totalCoins = await Coin.aggregate([
     {
-      $match: {user: mongoose.Types.ObjectId(userId)}
+      $match: { user: mongoose.Types.ObjectId(userId) },
     },
     {
       $group: {
         _id: null,
         total: {
-          $sum: "$coins"
-        }
-      }
-    }
+          $sum: '$coins',
+        },
+      },
+    },
   ]);
-  return totalcoins;
+  return totalCoins;
 };
 
 module.exports = {
@@ -147,5 +146,5 @@ module.exports = {
   getCityByName,
   gearChange,
   getCoins,
-  updateCoins
+  updateCoins,
 };

@@ -65,12 +65,9 @@ const rideSchema = mongoose.Schema(
       type: String,
     },
     endLang: {
-      type: String
-    },
-    endLat: {
       type: String,
     },
-    endLang: {
+    endLat: {
       type: String,
     },
     deviceName: {
@@ -89,15 +86,14 @@ const rideSchema = mongoose.Schema(
       type: Object,
     },
     coins: {
-      type: Number
+      type: Number,
     },
     startedAt: {
       type: Number,
-     
     },
     completedAt: {
       type: Number,
-    }
+    },
   },
   {
     timestamps: true,
@@ -107,7 +103,6 @@ const rideSchema = mongoose.Schema(
 // add plugin that converts mongoose to json
 rideSchema.plugin(toJSON);
 rideSchema.plugin(paginate);
-
 
 rideSchema.pre('save', async function (next) {
   next();
