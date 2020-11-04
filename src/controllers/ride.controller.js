@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
 const httpStatus = require('http-status');
 const rideService = require('../services/ride.service');
 const catchAsync = require('../utils/catchAsync');
+const pick = require('../utils/pick');
 
 const createRide = catchAsync(async (req, res) => {
   const ride = await rideService.createRide({ ...req.body, ...req.params });
@@ -9,8 +11,8 @@ const createRide = catchAsync(async (req, res) => {
 
 const createManyRides = catchAsync(async (req, res) => {
   // insert user id in ride in ridearray
-  req.body.forEach(function(ride) 
-  { 
+  req.body.forEach(function (ride) {
+    // eslint-disable-next-line no-param-reassign
     ride.user = req.params.user;
   });
   const rides = await rideService.createRides(req.body);
@@ -34,20 +36,20 @@ const deleteRide = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(ride);
 });
 
-const redeemCoin = catchAsync(async (req,res) => {
-  console.log("params: ",req.params);
-  console.log("body: ", req.body);
-  console.log("query", req.query);
+const redeemCoin = catchAsync(async (req, res) => {
+  console.log('params: ', req.params);
+  console.log('body: ', req.body);
+  console.log('query', req.query);
   const coin = await rideService.redeemCoin(req.params.user, req.params.ride);
   res.status(httpStatus.OK).send(coin);
 });
 
-const getSummaryByMonth = catchAsync(async (req,res) => {
+const getSummaryByMonth = catchAsync(async (req, res) => {
   const rides = await rideService.getSummaryByMonth(req.params.user, req.params.month);
   res.send(rides);
 });
 
-const getSummaryLifetime = catchAsync(async (req,res) => {
+const getSummaryLifetime = catchAsync(async (req, res) => {
   const rides = await rideService.getSummaryLifetime(req.params.user);
   res.status(httpStatus.OK).send(rides);
 });
@@ -61,5 +63,4 @@ module.exports = {
   getRides,
   getSummaryByMonth,
   getSummaryLifetime,
-  redeemCoin
 };

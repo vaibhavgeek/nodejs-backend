@@ -1,5 +1,3 @@
-const { v4: uuidv4 } = require('uuid');
-
 const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
@@ -14,7 +12,7 @@ const rewardSchema = mongoose.Schema(
       trim: true,
     },
     imageLandscape: {
-      type: String, 
+      type: String,
     },
     imagePotrait: {
       type: String,
@@ -26,7 +24,7 @@ const rewardSchema = mongoose.Schema(
       type: String,
     },
     totalCount: {
-      type: Number, 
+      type: Number,
     },
     availableCount: {
       type: Number,
@@ -37,18 +35,18 @@ const rewardSchema = mongoose.Schema(
     icon: {
       type: String,
     },
-    category:{
+    category: {
       type: String,
-      enum: ['Products', 'Services', 'Products.Services']
+      enum: ['Products', 'Services', 'Products.Services'],
     },
     rewardQuestions: {
-      type: Array
+      type: Array,
     },
     tag: {
-      type: String
+      type: String,
     },
     rewardContent: {
-      type: Array
+      type: Array,
     },
     dateExpired: {
       type: Number,
@@ -57,20 +55,20 @@ const rewardSchema = mongoose.Schema(
       type: Number,
     },
     ratings: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   {
     timestamps: true,
-  });
+  }
+);
 // add plugin that converts mongoose to json
 rewardSchema.plugin(toJSON);
 rewardSchema.plugin(paginate);
 
-
 rewardSchema.pre('save', async function (next) {
-  const coin = this;
-  
+  // const coin = this;
+
   next();
 });
 
