@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
+const httpStatus = require('http-status');
 const Ride = require('../models/ride.model');
 const Coin = require('../models/coin.model');
 
 const ApiError = require('../utils/ApiError');
-const httpStatus = require('http-status');
-const { response } = require('express');
 
 /**
  * Get Ride by id
@@ -14,16 +14,15 @@ const getRideById = async (id) => {
   return Ride.findById(id);
 };
 
-
 /**
  *
  * @param {Object} rideBody
  * @returns {Promise<Ride>}
  */
 const createRide = async (rideBody) => {
-  //console.log("ride body: ", rideBody);
+  // console.log("ride body: ", rideBody);
   const ride = await Ride.create(rideBody);
-  //console.log("ride created", ride);
+  // console.log("ride created", ride);
   return ride;
 };
 
@@ -33,11 +32,10 @@ const createRide = async (rideBody) => {
  * @returns {Promise<Rides>}
  */
 const createRides = async (rideArray) => {
- const rides = await Ride.insertMany(rideArray);
- //console.log("ride created", rides);
- return rides;
+  const rides = await Ride.insertMany(rideArray);
+  // console.log("ride created", rides);
+  return rides;
 };
-
 
 /**
  * Query for rides
@@ -63,7 +61,7 @@ const updateRideById = async (rideId, updateBody) => {
   if (!ride) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Ride not found');
   }
-  
+
   Object.assign(ride, updateBody);
   await ride.save();
   return ride;
@@ -87,9 +85,9 @@ const deleteRideById = async (rideId) => {
  * @param {ObjectId} userId
  * @param {String} month
  * @returns {Promise<Rides>}
-*/
+ */
 
-const getSummaryByMonth = async(userId, month) => {
+const getSummaryByMonth = async (userId, month) => {
   // const rides = await Ride.aggregate([
   //   {"$project": {"month": {"$month" : "$createdAt"}}},
   //   { "$match": { "user": userId , "month": month }},
@@ -97,12 +95,13 @@ const getSummaryByMonth = async(userId, month) => {
   //       "$eq":[{"$month": "$createdAt"}, month ],
   //       }
   //   }
-  
+
   // ]);
-  const rides = await Ride.find({ user: userId,
-    "$expr": {
-      "$eq":[{"$month": "$createdAt"}, month ]
-    }
+  const rides = await Ride.find({
+    user: userId,
+    $expr: {
+      $eq: [{ $month: '$createdAt' }, month],
+    },
   });
   return rides;
 };
@@ -112,10 +111,10 @@ const getSummaryByMonth = async(userId, month) => {
  * @returns {Promise<Rides>}
  */
 
-const getSummaryLifetime = async(userId) => {
-    const rides = await Ride.find({user: userId});
-    console.log(rides);
-    return rides;
+const getSummaryLifetime = async (userId) => {
+  const rides = await Ride.find({ user: userId });
+  console.log(rides);
+  return rides;
 };
 /**
  * Redeem Coins of Rides
@@ -123,11 +122,11 @@ const getSummaryLifetime = async(userId) => {
  * @param {ObjectId} rideId
  * @returns {Promise<Rides>}
  */
-const redeemCoin = async(userId, rideId) => {
-   const ride = await updateRideById(rideId, {"redeemed": true});
-   const coin = await Coin.create({"user": userId, "ride": rideId, "type": "ride", "redeemed": false, "coins": ride.coins});
+const redeemCoin = async (userId, rideId) => {
+  const ride = await updateRideById(rideId, { redeemed: true });
+  const coin = await Coin.create({ user: userId, ride: rideId, type: 'ride', redeemed: false, coins: ride.coins });
   return coin;
-  };
+};
 
 module.exports = {
   createRide,
@@ -137,5 +136,5 @@ module.exports = {
   createRides,
   getSummaryByMonth,
   getSummaryLifetime,
-  redeemCoin
+  redeemCoin,
 };
