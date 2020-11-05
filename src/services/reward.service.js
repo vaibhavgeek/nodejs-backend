@@ -20,7 +20,7 @@ const createReward = async (body) => {
 const createCoupons = async (body, rewardId) => {
   const obj = JSON.parse(JSON.stringify(body));
   obj.rewardId = rewardId;
-  obj.expiryDate = moment(obj.expiryDate).valueOf();
+  obj.expiryDate = moment(obj.expiryDate).valueOf()/1000;
   console.log(`OBJ: ${JSON.stringify(obj)}`);
   const reward = await Coupon.create(obj);
   Object.assign(reward, obj);

@@ -59,7 +59,8 @@ const getCoins = catchAsync(async (req, res) => {
 });
 
 const getCityByName = catchAsync(async (req, res) => {
-  const city = await userService.getCityByName(req.params.city);
+  console.log(req.query);
+  const city = await userService.getCityByName(req.query.city);
   res.status(httpStatus.OK).send(city);
 });
 
