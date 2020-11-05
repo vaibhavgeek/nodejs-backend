@@ -24,7 +24,7 @@ router
   .post(auth('getUsers'), userController.updateCoins)
   .get(auth('getUsers'), userController.getCoins);
 
-// router.get('/cities/:query', auth('getUsers'), validate(userValidation.getCityByName), userController.getCityByName);
+router.get('/cities/:city', userController.getCityByName);
 
 module.exports = router;
 

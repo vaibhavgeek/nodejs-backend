@@ -4,14 +4,17 @@ const mongoose = require('mongoose');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const Coin = require('../models/coin.model');
-
+const City = require('../models/cities.model');
 /**
  * Create a user
  * @param {Object} City
  * @returns {Promise<City>}
  */
 // eslint-disable-next-line no-unused-vars
-const getCityByName = async (_) => {};
+const getCityByName = async (city) => {
+  const citinames = await City.find({"name": new RegExp('.*' + city + '.*', 'i')});
+  return citinames;
+};
 
 /**
  * Create a user
