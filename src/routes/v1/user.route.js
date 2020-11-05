@@ -9,6 +9,8 @@ const router = express.Router();
 router.post('/create', validate(userValidation.createUser), userController.createUser);
 router.route('/view').get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
+router.get('/cities', userController.getCityByName);
+
 router
   .route('/:userId')
   .get(auth('getUsers'), validate(userValidation.getUserById), userController.getUserById)
@@ -24,7 +26,6 @@ router
   .post(auth('getUsers'), userController.updateCoins)
   .get(auth('getUsers'), userController.getCoins);
 
-router.get('/cities/:city', userController.getCityByName);
 
 module.exports = router;
 

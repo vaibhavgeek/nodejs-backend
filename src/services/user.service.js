@@ -12,7 +12,7 @@ const City = require('../models/cities.model');
  */
 // eslint-disable-next-line no-unused-vars
 const getCityByName = async (city) => {
-  const citinames = await City.find({"name": new RegExp('.*' + city + '.*', 'i')});
+  const citinames = await City.find({"name": new RegExp('.*' + city + '.*', 'i')}, {"name":1});
   return citinames;
 };
 
