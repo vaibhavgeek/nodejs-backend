@@ -11,8 +11,10 @@ const { tokenTypes } = require('../config/tokens');
  * @param {string} access_token
  * @returns {Promise<User>}
  */
-const loginUserWithToken = async (access_token) => {
-  const user = await tokenService.verifyToken(access_token, 'access');
+const loginUserWithToken = async (accessTokenId) => {
+  const acessToken = await tokenService.verifyToken(accessTokenId, tokenTypes.ACCESS);
+  const user = await userService.getUserById(acessToken.user);
+
   if (!user) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect token');
   }
