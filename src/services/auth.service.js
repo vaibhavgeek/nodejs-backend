@@ -5,6 +5,21 @@ const Token = require('../models/token.model');
 const ApiError = require('../utils/ApiError');
 const { tokenTypes } = require('../config/tokens');
 
+
+/**
+ * Login with username and password
+ * @param {string} access_token
+ * @returns {Promise<User>}
+ */
+const loginUserWithToken = async (access_token) => {
+  const user = await tokenService.verifyToken(access_token, 'access');
+  if (!user) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect token');
+  }
+  return user;
+};
+
+
 /**
  * Login with username and password
  * @param {string} email
@@ -76,4 +91,5 @@ module.exports = {
   logout,
   refreshAuth,
   resetPassword,
+  loginUserWithToken
 };

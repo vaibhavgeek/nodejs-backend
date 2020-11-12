@@ -15,6 +15,11 @@ const login = catchAsync(async (req, res) => {
   res.send({ user, tokens });
 });
 
+const loginToken = catchAsync(async (req, res) => {
+  const { access_token } = req.body;
+  const user = await authService.loginUserWithToken(access_token);
+  res.send(user);
+});
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   res.status(httpStatus.NO_CONTENT).send();
@@ -43,4 +48,5 @@ module.exports = {
   refreshTokens,
   forgotPassword,
   resetPassword,
+  loginToken,
 };
