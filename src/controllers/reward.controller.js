@@ -9,10 +9,10 @@ const catchAsync = require('../utils/catchAsync');
 const rewardService = require('../services/reward.service');
 
 const createReward = catchAsync(async (req, res) => {
-  console.log('params: ', req.params);
-  console.log('body: ', req.body);
-  console.log('file: ', req.files.coupons[0]);
-  console.log('query', req.query);
+  // console.log('params: ', req.params);
+  // console.log('body: ', req.body);
+  // console.log('file: ', req.files.coupons[0]);
+  // console.log('query', req.query);
 
   const reward = await rewardService.createReward(req.body);
 
@@ -21,12 +21,12 @@ const createReward = catchAsync(async (req, res) => {
     fs.createReadStream(req.files.coupons[0].path)
       .pipe(csv())
       .on('data', (row) => {
-        console.log(row);
+        // console.log(row);
         const coupon = rewardService.createCoupons(row, reward.id);
         console.log(coupon);
       })
       .on('end', () => {
-        console.log('CSV file successfully processed');
+       // console.log('CSV file successfully processed');
       });
     // eslint-disable-next-line security/detect-non-literal-fs-filename
     fs.unlinkSync(req.files.coupons[0].path);

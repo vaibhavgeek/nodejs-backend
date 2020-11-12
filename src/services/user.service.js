@@ -116,7 +116,7 @@ const getCoins = async (userId) => {
       },
     },
   ]);
-  console.log(coin);
+  //console.log(coin);
   return coin;
 };
 
