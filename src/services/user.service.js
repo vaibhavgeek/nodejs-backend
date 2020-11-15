@@ -138,6 +138,12 @@ const updateCoins = async (userId, coins) => {
   ]);
   return totalCoins;
 };
+const totalUsers = async () => {
+    const totalUsers = await User.count();
+    return totalUsers;
+};
+
+
 
 module.exports = {
   createUser,
@@ -150,4 +156,5 @@ module.exports = {
   gearChange,
   getCoins,
   updateCoins,
+  totalUsers
 };

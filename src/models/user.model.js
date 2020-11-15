@@ -80,6 +80,10 @@ const userSchema = mongoose.Schema({
   deviceInfo: {
     type: Object,
   },
+  blocked: {
+    type: Boolean,
+    default: true
+  },
   gear: {
     type: Object,
     properties: {
