@@ -90,9 +90,9 @@ const deleteRewardById = async (userId) => {
 
 const redeemRewardById = async (rewardId, userId) => {
   const tranxid = shortid.generate();
-  console.log(tranxid);
+  //console.log(tranxid);
   const reward = await getRewardById(rewardId, { $inc: { availableCount: -1 } });
-  console.log(reward);
+  //console.log(reward);
   const coupon = await Coupon.findOne({ rewardId });
   if (!coupon) {
     throw new ApiError(httpStatus.NOT_FOUND, 'No Coupon found for this reward');
@@ -102,6 +102,16 @@ const redeemRewardById = async (rewardId, userId) => {
   }
   return coupon;
 };
+const totalCoupons = async () => {
+  const totalcoupons = await Coupon.find({redeemed: true}).count();
+  return totalcoupons;
+};
+
+const totalRewards = async () => {
+  const totalrewards = await Reward.count();
+  return totalrewards;
+};
+
 
 module.exports = {
   createReward,
@@ -112,4 +122,6 @@ module.exports = {
   deleteRewardById,
   redeemRewardById,
   createCoupons,
+  totalCoupons,
+  totalRewards
 };

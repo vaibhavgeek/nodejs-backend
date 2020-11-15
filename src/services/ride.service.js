@@ -127,6 +127,27 @@ const redeemCoin = async (userId, rideId) => {
   const coin = await Coin.create({ user: userId, ride: rideId, type: 'ride', redeemed: false, coins: ride.coins });
   return coin;
 };
+const totalCoins = async () => {
+  const totalCoins = await Coin.aggregate([
+    {
+      $group: {
+        _id: null,
+        total: {
+          $sum: '$coins',
+        },
+      },
+    },
+  ]);
+
+  return totalCoins;
+};
+
+const totalRides = async () => {
+  const totalrides = await Ride.count();
+  return totalrides;
+};
+
+
 
 module.exports = {
   createRide,
@@ -137,4 +158,6 @@ module.exports = {
   getSummaryByMonth,
   getSummaryLifetime,
   redeemCoin,
+  totalCoins,
+  totalRides,
 };
