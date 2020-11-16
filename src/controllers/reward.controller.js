@@ -38,7 +38,7 @@ const createReward = catchAsync(async (req, res) => {
 });
 
 const getRewards = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['category', 'tag']);
+  const filter = pick(req.query, ['category', 'tag', 'active']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await rewardService.queryRewards(filter, options);
   res.send(result);
@@ -56,6 +56,17 @@ const updateReward = catchAsync(async (req, res) => {
   const reward = await rewardService.updateRewardById(req.params.rewardId, req.body);
   res.send(reward);
 });
+
+const activateReward = catchAsync(async (req, res) => {
+  const reward = await rewardService.updateRewardById(req.params.rewardId, {"active": true});
+  res.send(reward);
+});
+
+const deactivateReward = catchAsync(async (req, res) => {
+  const reward = await rewardService.updateRewardById(req.params.rewardId, {"active": false});
+  res.send(reward);
+});
+
 
 const redeemReward = catchAsync(async (req, res) => {
   const reward = await rewardService.redeemRewardById(req.params.rewardId, req.params.userId);
@@ -79,4 +90,6 @@ module.exports = {
   deleteReward,
   redeemReward,
   getRedeemedRewardsByUser,
+  activateReward,
+  deactivateReward
 };

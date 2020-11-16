@@ -57,6 +57,10 @@ const rewardSchema = mongoose.Schema(
     ratings: {
       type: Number,
     },
+    active: {
+      type: Boolean,
+      default: true
+    }
   },
   {
     timestamps: true,

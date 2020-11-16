@@ -10,6 +10,7 @@ const router = express.Router();
 
 const couponsUpload = upload.fields([{ name: 'coupons', maxCount: 1 }]);
 
+
 // creates reward
 router.route('/create').post(auth('manageRewards'), couponsUpload, rewardController.createReward);
 
@@ -24,6 +25,8 @@ router.route('/:rewardId').get(auth('useRewards'), rewardController.getRewardByI
 
 // update reward by id
 router.route('/:rewardId').patch(auth('useRewards'), rewardController.updateReward);
+router.route('/:rewardId/activate').post(auth('manageRewards'), rewardController.activateReward);
+router.route('/:rewardId/deactivate').post(auth('manageRewards'), rewardController.deactivateReward);
 
 // redeem coupon
 router.route('/:userId/redeem/:rewardId').post(auth('useRewards'), rewardController.redeemReward);

@@ -20,7 +20,6 @@ const createCoupons = async (body, rewardId) => {
   const obj = JSON.parse(JSON.stringify(body));
   obj.rewardId = rewardId;
   obj.expiryDate = moment(obj.expiryDate).valueOf()/1000;
-  console.log(`OBJ: ${JSON.stringify(obj)}`);
   const reward = await Coupon.create(obj);
   Object.assign(reward, obj);
   await reward.save();
@@ -38,8 +37,7 @@ const createCoupons = async (body, rewardId) => {
  */
 const queryRewards = async (filter, options) => {
   const secondsSinceEpoch = Math.round(Date.now() / 1000)
-  
-  const rewards = await Reward.paginate({ ...{"dateExpired" : { $gte : secondsSinceEpoch } , "availableCount" : { $gte : 1 }}, ...filter}, options);
+  const rewards = await Reward.paginate({ ...{"dateExpired" : { $gte : secondsSinceEpoch } , "availableCount" : { $gte : 1 }, "active": true}, ...filter}, options);
   return rewards;
 };
 
@@ -74,17 +72,17 @@ const getRedeemedRewardsByUser = async (userId) => {
 };
 
 /**
- * Delete user by id
- * @param {ObjectId} userId
- * @returns {Promise<User>}
+ * Delete reward by id
+ * @param {ObjectId} rewardId
+ * @returns {Promise<Reward>}
  */
-const deleteRewardById = async (userId) => {
-  const user = await userService.getUserById(userId);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+const deleteRewardById = async (rewardId) => {
+  const reward = await getRewardById(rewardId);
+  if (!reward) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Reward not found');
   }
-  await user.remove();
-  return user;
+  await reward.remove();
+  return reward;
 };
 
 const redeemRewardById = async (rewardId, userId) => {

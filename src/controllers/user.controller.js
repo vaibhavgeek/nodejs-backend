@@ -10,18 +10,19 @@ const createUser = catchAsync(async (req, res) => {
 });
 
 const getUsers = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', 'role']);
+  const filter = pick(req.query, ['name', 'role', 'email','city']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await userService.queryUsers(filter, options);
   res.send(result);
 });
 
 const getUsersByMonth = catchAsync(async (req, res) => {
-  const filter = {$expr: {
-    $eq: [{ $month: '$createdAt' }, 11],
+  console.log(req.query);
+  const filterparams = { "$expr": {
+    "$eq": [{ "$month": '$createdAt' }, 10],
   }};
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await userService.queryUsers(filter, options);
+  const result = await userService.queryUsers(filterparams, options);
   res.send(result);
 });
 
