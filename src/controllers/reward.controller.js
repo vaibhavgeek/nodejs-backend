@@ -54,6 +54,23 @@ const getRewardById = catchAsync(async (req, res) => {
 
 const updateReward = catchAsync(async (req, res) => {
   const reward = await rewardService.updateRewardById(req.params.rewardId, req.body);
+  try {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    fs.createReadStream(req.files.coupons[0].path)
+      .pipe(csv())
+      .on('data', (row) => {
+        // console.log(row);
+        const coupon = rewardService.createCoupons(row, reward.id);
+        console.log(coupon);
+      })
+      .on('end', () => {
+       // console.log('CSV file successfully processed');
+      });
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    fs.unlinkSync(req.files.coupons[0].path);
+  } catch (e) {
+    console.log(e);
+  }
   res.send(reward);
 });
 

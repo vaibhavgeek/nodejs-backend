@@ -24,7 +24,7 @@ router.route('/:rewardId').get(auth('useRewards'), rewardController.getRewardByI
 // router.route('/:rewardId/view').get(auth('useRewards') , rewardController.getRewardWithCoupon);
 
 // update reward by id
-router.route('/:rewardId').patch(auth('useRewards'), rewardController.updateReward);
+router.route('/:rewardId').patch(auth('manageRewards'), couponsUpload, rewardController.updateReward);
 router.route('/:rewardId/activate').post(auth('manageRewards'), rewardController.activateReward);
 router.route('/:rewardId/deactivate').post(auth('manageRewards'), rewardController.deactivateReward);
 
@@ -32,7 +32,6 @@ router.route('/:rewardId/deactivate').post(auth('manageRewards'), rewardControll
 router.route('/:userId/redeem/:rewardId').post(auth('useRewards'), rewardController.redeemReward);
 
 // get coupons history
-
 router.route('/:userId/coupons').get(auth('useRewards') , rewardController.getRedeemedRewardsByUser);
 
 // delete reward

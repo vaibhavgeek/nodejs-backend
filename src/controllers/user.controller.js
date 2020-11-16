@@ -19,10 +19,10 @@ const getUsers = catchAsync(async (req, res) => {
 const getUsersByMonth = catchAsync(async (req, res) => {
   console.log(req.query);
   const filterparams = { "$expr": {
-    "$eq": [{ "$month": '$createdAt' }, 10],
+    "$eq": [{ "$month": '$createdAt' }, parseInt(req.query.month)],
   }};
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await userService.queryUsers(filterparams, options);
+  const result = await userService.queryUsersExact(filterparams, options);
   res.send(result);
 });
 
