@@ -6,10 +6,18 @@ const userController = require('../../controllers/user.controller');
 
 const router = express.Router();
 
+router.route('/getcounts').get(auth('manageUsers'),userController.getTotalCounts);  
 router.post('/create', validate(userValidation.createUser), userController.createUser);
 router.route('/view').get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
 router.get('/cities', userController.getCityByName);
+router.route('/monthlyusers').get(auth('manageUsers'), userController.getUsersByMonth);
+
+
+router.route('/:userId/block').patch(auth('manageUsers'),userController.block);  
+router.route('/:userId/unblock').patch(auth('manageUsers'),userController.unblock);  
+router.route('/:userId/alldetails').get(auth('manageUsers'),userController.alldetails);  
+
 
 router
   .route('/:userId')
@@ -26,11 +34,7 @@ router
   .post(auth('getUsers'), userController.updateCoins)
   .get(auth('getUsers'), userController.getCoins);
 
-router.route('/getcounts').get(auth('manageUsers'),userController.getTotalCounts);  
 
-router.route('/:userId/block').get(auth('manageUsers'),userController.block);  
-router.route('/:userId/unblock').get(auth('manageUsers'),userController.unblock);  
-router.route('/:userId/alldetails').get(auth('manageUsers'),userController.alldetails);  
 
 module.exports = router;
 

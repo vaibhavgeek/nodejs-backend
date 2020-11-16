@@ -16,6 +16,16 @@ const getUsers = catchAsync(async (req, res) => {
   res.send(result);
 });
 
+const getUsersByMonth = catchAsync(async (req, res) => {
+  const filter = {$expr: {
+    $eq: [{ $month: '$createdAt' }, 11],
+  }};
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+  const result = await userService.queryUsers(filter, options);
+  res.send(result);
+});
+
+
 const getUserById = catchAsync(async (req, res) => {
   const user = await userService.getUserById(req.params.userId);
   if (!user) {
@@ -89,7 +99,8 @@ const alldetails = catchAsync(async (req, res) => {
   const coins = await userService.getCoins(req.params.userId);
   const coupons = await rewardService.getRedeemedRewardsByUser(req.params.userId);
   const rides = await rideService.getSummaryLifetime(req.params.userId);
-  const allDetails ={ "user" : user, "coins": coins, "orders": coupons, "rides": rides };
+  const listCoins = await userService.getCoinsList(req.params.userId);
+  const allDetails ={ "user" : user, "coins": listCoins, "orders": coupons, "rides": rides , "coinCount": coins };
   res.status(httpStatus.OK).send(allDetails);
 });
 
@@ -108,5 +119,6 @@ module.exports = {
   getTotalCounts,
   block,
   unblock,
-  alldetails
+  alldetails,
+  getUsersByMonth
 };

@@ -5,7 +5,6 @@ const moment = require('moment');
 const Reward = require('../models/reward.model');
 const Coupon = require('../models/coupon.model');
 const ApiError = require('../utils/ApiError');
-const { userService } = require('.');
 
 /**
  * Create a Reward
@@ -60,7 +59,7 @@ const getRewardById = async (id) => {
  * @returns {Promise<User>}
  */
 const updateRewardById = async (rewardId, updateBody) => {
-  const reward = await userService.getUserById(rewardId);
+  const reward = await getRewardById(rewardId);
   if (!reward) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Reward not found');
   }

@@ -120,6 +120,15 @@ const getCoins = async (userId) => {
   return coin;
 };
 
+const getCoinsList = async (userId) => {
+  const coins = await Coin.aggregate([
+    {
+      $match: { user: mongoose.Types.ObjectId(userId) },
+    }]);
+  //console.log(coin);
+  return coins;
+};
+
 // eslint-disable-next-line no-unused-vars
 const updateCoins = async (userId, coins) => {
   // const coin = await Coin.create({ user: userId, type: 'redeemReward', coins });
@@ -156,5 +165,6 @@ module.exports = {
   gearChange,
   getCoins,
   updateCoins,
-  totalUsers
+  totalUsers,
+  getCoinsList
 };

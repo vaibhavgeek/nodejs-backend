@@ -82,7 +82,7 @@ const userSchema = mongoose.Schema({
   },
   blocked: {
     type: Boolean,
-    default: true
+    default: false
   },
   gear: {
     type: Object,
@@ -104,10 +104,13 @@ const userSchema = mongoose.Schema({
       },
     },
   },
-  createdAt: {
+  createdAtEpoch: {
     type: Number,
     default: new Date().getTime(),
   },
+},
+{
+  timestamps: true,
 });
 
 // add plugin that converts mongoose to json
